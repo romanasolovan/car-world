@@ -1,4 +1,5 @@
-import { Car, CarFilters } from "@/types/cars";
+import { Car } from "@/types/cars";
+import { CarFilters } from "@/types/filters";
 import { create } from "zustand";
 
 // Define the shape of the store
