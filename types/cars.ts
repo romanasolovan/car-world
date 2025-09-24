@@ -1,19 +1,28 @@
 export interface Car {
-  id: number;
+  id: number | string;
   brand: string;
-  model: string;
-  year: number;
-  price: number;
-  mileage: number;
-  imageUrl: string;
-  description: string;
+  model?: string;
+  year?: number;
+  price?: number;
+  mileage?: number;
+  img?: string;
+  description?: string;
+  rentalPrice?: number;
+  address: string;
+  rentalCompany: string;
+  type: string;
 }
 
 export interface CarFilters {
   brand?: string;
-  rentalPrice?: string;
-  minMileage?: string;
-  maxMileage?: string;
-  limit?: string;
-  page?: string;
+  price?: string | number;
+  minMileage?: string | number;
+  maxMileage?: string | number;
+  limit?: string | number;
+  page?: string | number;
+}
+
+export interface CarsResponse {
+  cars: Car[];
+  totalPages: number;
 }

@@ -1,0 +1,28 @@
+.header {
+  background: var(--badges);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--badges);
+  padding: 24px 120px;
+}
+
+.navigation {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  text-align: center;
+  color: var(--main);
+}
+
+.homelink:hover,
+.cataloglink:hover {
+  color: var(--button-hover);
+}
+
+.links {
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+}
