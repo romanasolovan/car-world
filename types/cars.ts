@@ -3,23 +3,18 @@ export interface Car {
   brand: string;
   model?: string;
   year?: number;
-  price?: number;
+  rentalPrice?: number;
   mileage?: number;
   img?: string;
   description?: string;
-  rentalPrice?: number;
   address: string;
   rentalCompany: string;
   type: string;
-}
-
-export interface CarFilters {
-  brand?: string;
-  price?: string | number;
-  minMileage?: string | number;
-  maxMileage?: string | number;
-  limit?: string | number;
-  page?: string | number;
+  fuelConsumption: string;
+  engineSize: string;
+  accessories: string[];
+  functionalities: string[];
+  rentalConditions: string[];
 }
 
 export interface CarsResponse {

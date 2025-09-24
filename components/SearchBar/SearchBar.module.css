@@ -1,0 +1,74 @@
+.searchBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 84px;
+  margin-bottom: 56px;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.groupName {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 133%;
+  color: var(--gray);
+}
+
+.selectWrapper {
+  position: relative;
+  width: 200px;
+}
+
+.filter {
+  border-radius: 12px;
+  padding: 12px 16px;
+  background: var(--inputs);
+
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  color: var(--main);
+}
+
+.searchBtn {
+  border-radius: 12px;
+  padding: 12px 51px;
+  background: var(--button);
+
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 125%;
+  color: var(--white);
+}
+
+.mininput {
+  border-right: 1px solid var(--gray-light);
+  border-radius: 12px 0 0 12px;
+  padding: 12px 16px;
+}
+
+.maxinput {
+  border-radius: 0 12px 12px 0;
+  padding: 12px 16px;
+}
+
+.maxinput::-webkit-inner-spin-button,
+.maxinput::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.mininput::-webkit-inner-spin-button,
+.mininput::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

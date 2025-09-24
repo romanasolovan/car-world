@@ -4,6 +4,9 @@ import React from "react";
 import css from "./header.module.css";
 import Link from "next/link";
 
+// navigation set up - set page changes color
+// the best way to fix logo?
+
 function Header() {
   return (
     <header className={css.header}>

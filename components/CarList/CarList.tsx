@@ -7,6 +7,8 @@ interface CarListProps {
   cars: Car[];
 }
 
+// styling, card info needs to be fix and styled, add extra border when focus (make it a bit interactive here)
+
 function CarList({ cars }: CarListProps) {
   return (
     <div className={css.card}>

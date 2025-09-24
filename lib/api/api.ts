@@ -1,4 +1,5 @@
-import { CarFilters, CarsResponse } from "@/types/cars";
+import { Car, CarsResponse } from "@/types/cars";
+import { CarFilters } from "@/types/filters";
 import axios from "axios";
 
 axios.defaults.baseURL = "https://car-rental-api.goit.global";
@@ -8,13 +9,13 @@ export async function fetchCars(filters: CarFilters = {}) {
     page: filters.page ?? 1,
     limit: filters.limit ?? 12,
     brand: filters.brand,
-    price: filters.price,
+    rentalPrices: filters.rentalPrices,
     minMileage: filters.minMileage,
     maxMileage: filters.maxMileage,
   };
 
   if (filters.brand) params.brand = filters.brand;
-  if (filters.price) params.price = Number(filters.price);
+  if (filters.rentalPrices) params.rentalPrices = String(filters.rentalPrices);
   if (filters.minMileage) params.minMileage = Number(filters.minMileage);
   if (filters.maxMileage) params.maxMileage = Number(filters.maxMileage);
 
@@ -25,4 +26,12 @@ export async function fetchCars(filters: CarFilters = {}) {
 export async function fetchBrands() {
   const response = await axios.get("/brands");
   return response.data as string[];
+}
+
+export async function fetchRentalPrices() {
+  const response = await axios.get("/cars");
+  const cars: Car[] = response.data.cars;
+
+  const prices = [...new Set(cars.map((car) => car.rentalPrice))];
+  return prices.sort((a, b) => Number(a) - Number(b));
 }

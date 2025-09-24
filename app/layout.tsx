@@ -4,6 +4,8 @@ import "./globals.css";
 import Header from "@/components/Header/header";
 import { Providers } from "./provider";
 
+// review metadata, add icon to the tab
+
 const geistManrope = Manrope({
   variable: "--font-manrope",
   subsets: ["latin"],
