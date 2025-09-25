@@ -16,13 +16,12 @@
   color: var(--main);
 }
 
-.homelink:hover,
-.cataloglink:hover {
-  color: var(--button-hover);
-}
-
 .links {
   display: flex;
   justify-content: space-between;
   gap: 32px;
+}
+
+.active {
+  color: var(--button-hover);
 }

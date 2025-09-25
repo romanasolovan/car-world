@@ -1,21 +1,142 @@
-.carid {
-  max-width: 1200px;
-  background: linear-gradient(
-    180deg,
-    rgba(18, 20, 23, 0.5) 0%,
-    rgba(18, 20, 23, 0.5) 100%
-  );
+.carContainer {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
 }
 
-.card {
+.carCard {
   display: flex;
   flex-wrap: wrap;
-  flex-direction: row;
-  /* justify-content: space-between; */
+  justify-content: center;
   gap: 32px;
 }
 
-.img {
-  border-radius: 14px;
+.carId {
+  position: relative;
+  max-width: 276px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.carId:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+}
+
+.heartBtn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 10;
+  color: rgba(0, 0, 0, 0.3);
+  transition: color 0.2s ease;
+
+  pointer-events: auto;
+}
+
+.heartBtn.active {
+  color: var(--blue);
+}
+
+.heartBtn:hover {
+  transform: scale(1.1);
+}
+
+.heartBtn img {
+  display: block;
+}
+
+.carImg img {
+  width: 100%;
+  height: auto;
   object-fit: cover;
+  border-radius: 14px;
+}
+
+.carDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.mainInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.carTitle {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  color: var(--main);
+}
+
+.accent {
+  color: var(--button);
+}
+
+.price {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  color: var(--main);
+}
+
+.extraInfo {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 133%;
+  color: var(--gray);
+}
+
+.block {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
+
+.block p {
+  position: relative;
+}
+
+/* Add | only between items */
+.block p:not(:last-child)::after {
+  content: "|";
+  margin-left: 6px;
+  color: var(--gray-light);
+}
+
+/* Special case: allow | after the last item ONLY in the first block!!!! */
+.extraInfo .block:first-child p:last-child::after {
+  content: "|";
+  margin-left: 6px;
+  color: var(--gray-light);
+}
+
+.moreBtn {
+  display: flex;
+  justify-content: center;
+}
+
+.readMoreBtn {
+  border-radius: 12px;
+  padding: 12px 99px;
+  background: var(--button);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  width: 276px;
+  /* height: 44px; */
 }

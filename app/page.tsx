@@ -2,7 +2,7 @@ import React from "react";
 import css from "./page.module.css";
 import Link from "next/link";
 
-// background image needs to be fixed along with the hero info + what needs to be fixed in header
+// background image needs to be fixed along with the hero info + what needs to be fixed in header - image reltice and position with absolute
 
 export default function HomePage() {
   return (

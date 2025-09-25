@@ -6,8 +6,8 @@ axios.defaults.baseURL = "https://car-rental-api.goit.global";
 
 export async function fetchCars(filters: CarFilters = {}) {
   const params: CarFilters = {
-    page: filters.page ?? 1,
-    limit: filters.limit ?? 12,
+    page: filters.page ?? "1",
+    limit: filters.limit ?? "12",
     brand: filters.brand,
     rentalPrices: filters.rentalPrices,
     minMileage: filters.minMileage,
@@ -16,8 +16,8 @@ export async function fetchCars(filters: CarFilters = {}) {
 
   if (filters.brand) params.brand = filters.brand;
   if (filters.rentalPrices) params.rentalPrices = String(filters.rentalPrices);
-  if (filters.minMileage) params.minMileage = Number(filters.minMileage);
-  if (filters.maxMileage) params.maxMileage = Number(filters.maxMileage);
+  if (filters.minMileage) params.minMileage = String(filters.minMileage);
+  if (filters.maxMileage) params.maxMileage = String(filters.maxMileage);
 
   const response = await axios.get<CarsResponse>(`/cars`, { params });
   return response.data;

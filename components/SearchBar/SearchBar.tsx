@@ -1,18 +1,17 @@
-import { CarFilters } from "@/types/filters";
-import { FiltersState } from "@/types/filters";
+import { CarFilters, FiltersState } from "@/types/filters";
 import React from "react";
 import css from "./SearchBar.module.css";
+import CustomSelect from "../CustomSelect/CustomSelect";
 
 interface SearchBarProps {
   filters: FiltersState;
-  //   filters: CarFilters;
   setFilters: React.Dispatch<React.SetStateAction<CarFilters>>;
   onSearch: () => void;
   brands: string[];
   prices: number[];
 }
 
-// finish setting up the search bar (styling, scroll, svg)
+// fixing those inputs, so they match aaaaa
 
 function SearchBar({
   filters,
@@ -23,73 +22,60 @@ function SearchBar({
 }: SearchBarProps) {
   return (
     <div className={css.searchBar}>
-      {/* Car Brand */}
-      <div className={css.group}>
-        <label htmlFor="title" className={css.groupName}>
-          Car Brand
-        </label>
-        <select
-          className={css.filter}
-          value={filters.brand ?? ""}
-          onChange={(e) => setFilters({ ...filters, brand: e.target.value })}
-        >
-          <option value="">Choose a brand</option>
-          {brands.map((b) => (
-            <option key={b} value={b}>
-              {b}
-            </option>
-          ))}
-        </select>
-      </div>
+      {/* Car Brand Select*/}
 
-      {/* Price Filter */}
-      <div className={css.group}>
-        <label htmlFor="price" className={css.groupName}>
-          Price/ 1 hour
-        </label>
-        <div className={css.selectWrapper}>
-          <select
-            className={css.filter}
-            value={filters.rentalPrices || ""}
-            onChange={(e) =>
-              setFilters({ ...filters, rentalPrices: Number(e.target.value) })
-            }
-          >
-            <option value="">Choose a price</option>
-            {prices.map((p) => (
-              <option key={p} value={p}>
-                {p} USD/hour
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
+      <CustomSelect
+        label="Car Brand"
+        value={filters.brand ?? ""}
+        onChange={(val) => setFilters({ ...filters, brand: val })}
+        options={[
+          { label: "Choose a brand", value: "" },
+          ...brands.map((b) => ({ label: b, value: b })),
+        ]}
+      />
+
+      <CustomSelect
+        label="Price/ 1 hour"
+        value={filters.rentalPrices ?? ""}
+        onChange={(val) => setFilters({ ...filters, rentalPrices: val })}
+        options={[
+          { label: "Choose a price", value: "" },
+          ...prices.map((p) => ({ label: `${p} USD/hour`, value: String(p) })),
+        ]}
+      />
 
       {/* mileage input */}
 
       <div className={css.inputs}>
-        <label htmlFor="mileage" className={css.groupName}>
-          Сar mileage / km
-        </label>
-        <input
-          className={css.mininput}
-          type="number"
-          placeholder="Mileage from"
-          value={filters.minMileage || ""}
-          onChange={(e) =>
-            setFilters({ ...filters, minMileage: e.target.value || undefined })
-          }
-        />
+        <label className={css.groupName}>Сar mileage / km</label>
 
-        <input
-          className={css.maxinput}
-          type="number"
-          placeholder="Mileage to"
-          value={filters.maxMileage || ""}
-          onChange={(e) =>
-            setFilters({ ...filters, maxMileage: e.target.value || undefined })
-          }
-        />
+        <div className={css.inputGroup}>
+          <input
+            className={css.minInput}
+            type="number"
+            placeholder="From"
+            value={filters.minMileage || ""}
+            onChange={(e) =>
+              setFilters({
+                ...filters,
+                minMileage: e.target.value || undefined,
+              })
+            }
+          />
+
+          <input
+            className={css.maxInput}
+            type="number"
+            placeholder="To"
+            value={filters.maxMileage || ""}
+            onChange={(e) =>
+              setFilters({
+                ...filters,
+                maxMileage: e.target.value || undefined,
+              })
+            }
+          />
+        </div>
       </div>
 
       <button className={css.searchBtn} onClick={onSearch}>

@@ -1,10 +1,13 @@
 .searchBar {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  /* align-items: center; */
   justify-content: center;
   gap: 16px;
   margin-top: 84px;
   margin-bottom: 56px;
+
+  /* height: 68px; */
 }
 
 .group {
@@ -23,10 +26,9 @@
 
 .selectWrapper {
   position: relative;
-  width: 200px;
 }
 
-.filter {
+/* .filter {
   border-radius: 12px;
   padding: 12px 16px;
   background: var(--inputs);
@@ -36,9 +38,61 @@
   font-size: 16px;
   line-height: 125%;
   color: var(--main);
+} */
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: row;
+}
+
+.minInput {
+  border-right: 1px solid var(--gray-light);
+  border-left: none;
+  border-top: none;
+  border-bottom: none;
+  border-radius: 12px 0 0 12px;
+  background: var(--inputs);
+
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  color: var(--main);
+
+  padding: 12px 16px;
+  outline: none;
+}
+
+.maxInput {
+  border-radius: 0 12px 12px 0;
+  border: none;
+  background: var(--inputs);
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  color: var(--main);
+
+  padding: 12px 16px;
+  outline: none;
+}
+
+.minInput::-webkit-inner-spin-button,
+.minInput::-webkit-outer-spin-button,
+.maxInput::-webkit-inner-spin-button,
+.maxInput::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .searchBtn {
+  margin-top: 24px;
   border-radius: 12px;
   padding: 12px 51px;
   background: var(--button);
@@ -48,27 +102,4 @@
   font-size: 16px;
   line-height: 125%;
   color: var(--white);
-}
-
-.mininput {
-  border-right: 1px solid var(--gray-light);
-  border-radius: 12px 0 0 12px;
-  padding: 12px 16px;
-}
-
-.maxinput {
-  border-radius: 0 12px 12px 0;
-  padding: 12px 16px;
-}
-
-.maxinput::-webkit-inner-spin-button,
-.maxinput::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.mininput::-webkit-inner-spin-button,
-.mininput::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
 }

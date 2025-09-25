@@ -1,51 +1,78 @@
 "use client";
 
 import { fetchBrands, fetchCars, fetchRentalPrices } from "@/lib/api/api";
-import { Car } from "@/types/cars";
-import { CarFilters } from "@/types/filters";
+import { Car, CarsResponse } from "@/types/cars";
+import { CarFilters, FiltersState } from "@/types/filters";
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import CarList from "@/components/CarList/CarList";
-import { FiltersState } from "@/types/filters";
+import css from "./Catalog.module.css";
 
-// review code and clean it up a bit
+const PAGE_LIMIT = 12;
+
+// fix pagination and smooth scrolling
 
 function CatalogPage() {
-  const [page, setPage] = useState(1);
-
   const [filters, setFilters] = useState<FiltersState>({
     brand: undefined,
     rentalPrices: undefined,
     minMileage: undefined,
     maxMileage: undefined,
   });
-  const [appliedFilters, setAppliedFilters] = useState<CarFilters>(filters);
 
-  const { data, isLoading, isError } = useQuery({
+  const [appliedFilters, setAppliedFilters] = useState<CarFilters>(filters);
+  const [page, setPage] = useState(1);
+  const [allCars, setAllCars] = useState<Car[]>([]);
+  const [hasMore, setHasMore] = useState(true);
+
+  const carListRef = useRef<HTMLDivElement>(null);
+
+  const { data, isLoading, isError } = useQuery<CarsResponse, Error>({
     queryKey: ["cars", { page, ...appliedFilters }],
-    queryFn: () => fetchCars({ page, limit: 12, ...appliedFilters }),
+    queryFn: () =>
+      fetchCars({ page, limit: String(PAGE_LIMIT), ...appliedFilters }),
+
+    placeholderData: (prev) => prev,
   });
 
-  const { data: brands = [] } = useQuery({
+  const { data: brands = [] } = useQuery<string[], Error>({
     queryKey: ["brands"],
     queryFn: fetchBrands,
   });
 
-  const { data: prices = [] } = useQuery({
+  const { data: prices = [] } = useQuery<(number | undefined)[], Error>({
     queryKey: ["rentalPrices"],
     queryFn: fetchRentalPrices,
   });
 
+  useEffect(() => {
+    if (data?.cars) {
+      if (page === 1) {
+        setAllCars(data.cars);
+      } else {
+        setAllCars((prev) => [...prev, ...data.cars]);
+      }
+
+      setHasMore(data.cars.length === PAGE_LIMIT);
+    } else {
+      setHasMore(false);
+    }
+  }, [data?.cars, page]);
+
   const handleSearch = () => {
     setAppliedFilters(filters);
-    setPage(1); // reset page on new search
+    setPage(1);
+    setAllCars([]);
+    setHasMore(true);
   };
 
-  if (isLoading) return <p>Loading wait</p>;
-  if (isError) return <p>Something went wrong</p>;
+  const loadMore = () => {
+    if (hasMore) setPage((prev) => prev + 1);
+  };
 
-  const cars: Car[] = data?.cars || [];
+  if (isLoading && page === 1) return <p>Loading wait...</p>;
+  if (isError) return <p>Something went wrong</p>;
 
   return (
     <div>
@@ -54,14 +81,20 @@ function CatalogPage() {
         setFilters={setFilters}
         onSearch={handleSearch}
         brands={brands}
-        prices={
-          prices?.filter((price): price is number => price !== undefined) || []
-        }
+        prices={prices.filter((p): p is number => p !== undefined)}
       />
 
-      <CarList cars={cars} />
+      <div ref={carListRef}>
+        <CarList cars={allCars} />
+      </div>
 
-      <button onClick={() => setPage((p) => p + 1)}>Load more</button>
+      {hasMore && (
+        <div style={{ textAlign: "center", marginTop: "24px" }}>
+          <button onClick={loadMore} className={css.loadBtn}>
+            {isLoading && page > 1 ? "Loading..." : "Load more"}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

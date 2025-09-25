@@ -1,15 +1,15 @@
 export interface FiltersState {
   brand?: string;
-  rentalPrices?: string | number;
-  minMileage?: string | number;
-  maxMileage?: string | number;
+  rentalPrices?: string;
+  minMileage?: string;
+  maxMileage?: string;
 }
 
 export interface CarFilters {
   brand?: string;
-  rentalPrices?: string | number;
-  minMileage?: string | number;
-  maxMileage?: string | number;
-  limit?: string | number;
+  rentalPrices?: string;
+  minMileage?: string;
+  maxMileage?: string;
+  limit?: string;
   page?: string | number;
 }

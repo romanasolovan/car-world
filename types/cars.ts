@@ -1,5 +1,5 @@
 export interface Car {
-  id: number | string;
+  id: string;
   brand: string;
   model?: string;
   year?: number;
@@ -15,6 +15,7 @@ export interface Car {
   accessories: string[];
   functionalities: string[];
   rentalConditions: string[];
+  name: string;
 }
 
 export interface CarsResponse {
