@@ -17,7 +17,7 @@ interface CarStore {
   setFilters: (filters: CarFilters) => void; // update filters
   resetFilters: () => void; // clear filters
   addFavorite: (car: Car) => void; // save favorite car
-  removeFavorite: (id: number) => void; // remove favorite by id
+  removeFavorite: (id: string) => void; // remove favorite by id
   clearFavorites: () => void; // wipe favorites
   setLoading: (loading: boolean) => void; // toggle loading state
   setError: (error: string | null) => void; // set error message
@@ -49,7 +49,7 @@ const useCarStore = create<CarStore>((set) => ({
       return { favorites: updated };
     }),
 
-  removeFavorite: (id) =>
+  removeFavorite: (id: string) =>
     set((state) => {
       const updated = state.favorites.filter((c) => c.id !== id);
       localStorage.setItem("favorites", JSON.stringify(updated));
