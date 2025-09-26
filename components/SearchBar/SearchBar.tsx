@@ -11,7 +11,7 @@ interface SearchBarProps {
   prices: number[];
 }
 
-// fixing those inputs, so they match aaaaa
+//  filtering, fixing (,) issues!!!!
 
 function SearchBar({
   filters,
@@ -34,6 +34,8 @@ function SearchBar({
         ]}
       />
 
+      {/* Car Brand Select*/}
+
       <CustomSelect
         label="Price/ 1 hour"
         value={filters.rentalPrices ?? ""}
@@ -50,31 +52,45 @@ function SearchBar({
         <label className={css.groupName}>Сar mileage / km</label>
 
         <div className={css.inputGroup}>
-          <input
-            className={css.minInput}
-            type="number"
-            placeholder="From"
-            value={filters.minMileage || ""}
-            onChange={(e) =>
-              setFilters({
-                ...filters,
-                minMileage: e.target.value || undefined,
-              })
-            }
-          />
+          <div className={css.inputWrapper}>
+            <span className={css.inputPrefix}>From</span>
+            <input
+              id="minMileage"
+              className={css.minInput}
+              type="text"
+              placeholder=""
+              value={filters.minMileage || ""}
+              onChange={(e) => {
+                const rawValue = e.target.value;
+                const cleaned = rawValue.replace(/[^0-9,.\s]/g, "");
+                setFilters({
+                  ...filters,
+                  minMileage: cleaned || undefined,
+                });
+              }}
+              aria-label="Minimum mileage"
+            />
+          </div>
 
-          <input
-            className={css.maxInput}
-            type="number"
-            placeholder="To"
-            value={filters.maxMileage || ""}
-            onChange={(e) =>
-              setFilters({
-                ...filters,
-                maxMileage: e.target.value || undefined,
-              })
-            }
-          />
+          <div className={css.inputWrapper}>
+            <span className={css.inputPrefix}>To</span>
+            <input
+              id="maxMileage"
+              className={css.maxInput}
+              type="text"
+              placeholder=""
+              value={filters.maxMileage || ""}
+              onChange={(e) => {
+                const rawValue = e.target.value;
+                const cleaned = rawValue.replace(/[^0-9,.\s]/g, "");
+                setFilters({
+                  ...filters,
+                  maxMileage: cleaned || undefined,
+                });
+              }}
+              aria-label="Maximum mileage"
+            />
+          </div>
         </div>
       </div>
 

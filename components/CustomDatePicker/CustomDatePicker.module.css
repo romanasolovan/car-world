@@ -1,0 +1,49 @@
+.input {
+  border-radius: 12px;
+  padding: 12px 20px;
+  background: var(--inputs);
+  border: none;
+
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  color: var(--gray);
+
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.popover {
+  position: absolute;
+  z-index: 1000;
+  top: calc(100% + 8px);
+  left: 275;
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.calendar {
+  background: var(--inputs);
+
+  border: 1px solid var(--button-hover);
+  border-radius: 12px;
+
+  font-family: var(--second-family);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 120%;
+  text-align: center;
+  color: var(--main);
+}
+
+.calendarToggle {
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+}

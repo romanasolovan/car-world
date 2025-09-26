@@ -5,7 +5,8 @@ import { Car } from "@/types/cars";
 import css from "./CarList.module.css";
 import Image from "next/image";
 import Link from "next/link";
-// import { Link } from "react-router-dom";
+
+// function to add favorites to a separete components + styling in my manner
 
 interface CarListProps {
   cars: Car[];
@@ -84,8 +85,17 @@ function CarList({ cars }: CarListProps) {
               {/* Top group: brand, year, price */}
               <div className={css.mainInfo}>
                 <h3 className={css.carTitle}>
-                  {car.brand} <span className={css.accent}>{car.model}</span>,{" "}
-                  {car.year}
+                  {`${car.brand} ${car.model}`.length > 20 ? (
+                    <>
+                      {`${car.brand} ${car.model}`.slice(0, 20)}... , {car.year}
+                    </>
+                  ) : (
+                    <>
+                      {car.brand}{" "}
+                      <span className={css.accent}>{car.model}</span>,{" "}
+                      {car.year}
+                    </>
+                  )}
                 </h3>
                 <span className={css.price}>${car.rentalPrice}</span>
               </div>

@@ -1,0 +1,85 @@
+.form {
+  border: 1px solid var(--gray-light);
+  border-radius: 10px;
+  padding: 32px;
+
+  height: 488px;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.formTitle {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 120%;
+  color: var(--main);
+  margin-bottom: 8px;
+}
+
+.formSubtitle {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  color: var(--gray);
+  margin-bottom: 24px;
+}
+
+.formInputs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formGroup {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input {
+  border-radius: 12px;
+  padding: 12px 20px;
+  background: var(--inputs);
+  border: none;
+
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  color: var(--gray);
+}
+
+.textarea {
+  border-radius: 12px;
+  padding: 12px 20px 56px;
+
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  color: var(--gray);
+
+  background: var(--inputs);
+  border: none;
+}
+
+.sendBtn {
+  border-radius: 12px;
+  padding: 12px 51px;
+  width: 156px;
+  height: 44px;
+  background: var(--button);
+
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 125%;
+  color: var(--white);
+
+  position: relative;
+  left: 190px;
+}

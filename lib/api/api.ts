@@ -35,3 +35,8 @@ export async function fetchRentalPrices() {
   const prices = [...new Set(cars.map((car) => car.rentalPrice))];
   return prices.sort((a, b) => Number(a) - Number(b));
 }
+
+export async function fetchCarsById(id: string) {
+  const response = await axios.get(`/cars/${id}`);
+  return response.data as Car;
+}

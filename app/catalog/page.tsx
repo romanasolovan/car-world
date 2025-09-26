@@ -11,8 +11,6 @@ import css from "./Catalog.module.css";
 
 const PAGE_LIMIT = 12;
 
-// fix pagination and smooth scrolling
-
 function CatalogPage() {
   const [filters, setFilters] = useState<FiltersState>({
     brand: undefined,
@@ -51,7 +49,14 @@ function CatalogPage() {
       if (page === 1) {
         setAllCars(data.cars);
       } else {
-        setAllCars((prev) => [...prev, ...data.cars]);
+        setAllCars((prev) => {
+          const merged = [...prev, ...data.cars];
+          const unique = merged.filter(
+            (car, index, self) =>
+              index === self.findIndex((c) => c.id === car.id)
+          );
+          return unique;
+        });
       }
 
       setHasMore(data.cars.length === PAGE_LIMIT);

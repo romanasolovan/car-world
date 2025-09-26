@@ -33,7 +33,7 @@
   border: none;
   font-size: 20px;
   cursor: pointer;
-  z-index: 10;
+  z-index: 2;
   color: rgba(0, 0, 0, 0.3);
   transition: color 0.2s ease;
 
