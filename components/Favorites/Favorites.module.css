@@ -1,0 +1,312 @@
+/* Modal Overlay */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+/* Modal Content */
+.modalContent {
+  background: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Modal Header */
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 20px 24px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.modalTitle {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1f2937;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+}
+
+.heartIcon {
+  filter: hue-rotate(0deg) saturate(1.2);
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  color: #6b7280;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.closeBtn:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+/* Modal Body */
+.modalBody {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* Empty State */
+.emptyState {
+  text-align: center;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.emptyIcon {
+  width: 80px;
+  height: 80px;
+  background-color: #f9fafb;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.emptyHeartIcon {
+  opacity: 0.4;
+}
+
+.emptyTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #374151;
+  margin: 0;
+}
+
+.emptyMessage {
+  color: #6b7280;
+  font-size: 16px;
+  margin: 0 0 24px 0;
+  max-width: 400px;
+}
+
+.catalogBtn {
+  background-color: #3b82f6;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+  display: inline-block;
+}
+
+.catalogBtn:hover {
+  background-color: #2563eb;
+}
+
+/* Favorites Grid */
+.favoritesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Favorite Card */
+.favoriteCard {
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.favoriteCard:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.removeBtn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+}
+
+.removeBtn:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
+}
+
+/* Car Image */
+.carImageContainer {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  background-color: #f8fafc;
+}
+
+.carImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.favoriteCard:hover .carImage {
+  transform: scale(1.05);
+}
+
+/* Car Info */
+.carInfo {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.carTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.carModel {
+  color: #3b82f6;
+}
+
+.carYear {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.carPrice {
+  font-size: 18px;
+  font-weight: 600;
+  color: #059669;
+  margin: 4px 0;
+}
+
+.carMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #6b7280;
+  margin: 8px 0;
+  padding-top: 8px;
+  border-top: 1px solid #f3f4f6;
+}
+
+.carType {
+  background-color: #f3f4f6;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.carMileage {
+  font-weight: 500;
+}
+
+.viewBtn {
+  background-color: #f8fafc;
+  color: #374151;
+  padding: 10px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  text-align: center;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.viewBtn:hover {
+  background-color: #e2e8f0;
+  color: #1f2937;
+}
+
+/* Responsive Design */
+/* @media (max-width: 768px) {
+  .modalOverlay {
+    padding: 10px;
+  }
+  
+  .modalContent {
+    max-height: 95vh;
+  }
+  
+  .modalHeader {
+    padding: 20px 20px 16px 20px;
+  }
+  
+  .modalTitle {
+    font-size: 20px;
+  }
+  
+  .modalBody {
+    padding: 20px;
+  }
+  
+  .favoritesGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .emptyState {
+    padding: 40px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modalHeader {
+    padding: 16px;
+  }
+  
+  .modalBody {
+    padding: 16px;
+  }
+  
+  .modalTitle {
+    font-size: 18px;
+    gap: 8px;
+  }
+} */

@@ -2,68 +2,151 @@ import { Car } from "@/types/cars";
 import { CarFilters } from "@/types/filters";
 import { create } from "zustand";
 
-// Define the shape of the store
 interface CarStore {
   // --- STATE ---
-  vehicles: Car[]; // list of cars currently fetched
-  filters: CarFilters; // active filters for API calls
-  favorites: Car[]; // saved favorite cars
-  loading: boolean; // whether data is loading
-  error: string | null; // error messages
+  vehicles: Car[];
+  filters: CarFilters;
+  favorites: Car[];
+  loading: boolean;
+  error: string | null;
 
-  // --- ACTIONS (functions that change state) ---
-  setVehicles: (cars: Car[]) => void; // replace vehicle list
-  appendVehicles: (cars: Car[]) => void; // add more vehicles (pagination)???
-  setFilters: (filters: CarFilters) => void; // update filters
-  resetFilters: () => void; // clear filters
-  addFavorite: (car: Car) => void; // save favorite car
-  removeFavorite: (id: string) => void; // remove favorite by id
-  clearFavorites: () => void; // wipe favorites
-  setLoading: (loading: boolean) => void; // toggle loading state
-  setError: (error: string | null) => void; // set error message
+  // --- ACTIONS ---
+  setVehicles: (cars: Car[]) => void;
+  appendVehicles: (cars: Car[]) => void;
+  setFilters: (filters: Partial<CarFilters>) => void;
+  resetFilters: () => void;
+  addFavorite: (car: Car) => void;
+  removeFavorite: (id: string) => void;
+  clearFavorites: () => void;
+  hydrateFavorites: () => void;
+  setLoading: (loading: boolean) => void;
+  setError: (error: string | null) => void;
+
+  // --- SELECTORS ---
+  filteredVehicles: () => Car[];
 }
 
-// Create Zustand store
-const useCarStore = create<CarStore>((set) => ({
-  // --- Initial state values ---
-  vehicles: [], // start with empty car list
-  filters: { brand: "", limit: "10", page: "1" }, // sensible defaults
-  favorites: JSON.parse(localStorage.getItem("favorites") || "[]"), // load from localStorage
-  loading: false, // nothing loading at start
-  error: null, // no error at start
+const defaultFilters: CarFilters = {
+  brand: undefined, // Changed from "" to undefined for consistency
+  rentalPrice: undefined,
+  minMileage: undefined,
+  maxMileage: undefined,
+  page: 1,
+  limit: "10",
+};
 
-  // --- Actions ---
+const useCarStore = create<CarStore>((set, get) => ({
+  vehicles: [],
+  filters: defaultFilters,
+  favorites: [],
+  loading: false,
+  error: null,
+
   setVehicles: (cars) => set({ vehicles: cars }),
 
   appendVehicles: (cars) =>
-    set((state) => ({ vehicles: [...state.vehicles, ...cars] })),
-
-  setFilters: (filters) => set({ filters }),
-
-  resetFilters: () => set({ filters: { brand: "", limit: "10", page: "1" } }),
-
-  addFavorite: (car) =>
     set((state) => {
+      const merged = [...state.vehicles, ...cars];
+      const unique = merged.filter(
+        (car, index, self) => index === self.findIndex((c) => c.id === car.id)
+      );
+      return { vehicles: unique };
+    }),
+
+  setFilters: (filters) =>
+    set((state) => ({
+      filters: { ...state.filters, ...filters },
+    })),
+
+  resetFilters: () => set({ filters: { ...defaultFilters } }),
+
+  addFavorite: (car: Car) =>
+    set((state) => {
+      if (state.favorites.find((c) => c.id === car.id)) return state;
       const updated = [...state.favorites, car];
-      localStorage.setItem("favorites", JSON.stringify(updated));
+      if (typeof window !== "undefined") {
+        localStorage.setItem("favorites", JSON.stringify(updated));
+      }
       return { favorites: updated };
     }),
 
   removeFavorite: (id: string) =>
     set((state) => {
       const updated = state.favorites.filter((c) => c.id !== id);
-      localStorage.setItem("favorites", JSON.stringify(updated));
+      if (typeof window !== "undefined") {
+        localStorage.setItem("favorites", JSON.stringify(updated));
+      }
       return { favorites: updated };
     }),
 
   clearFavorites: () => {
-    localStorage.removeItem("favorites");
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("favorites");
+    }
     set({ favorites: [] });
   },
 
-  setLoading: (loading) => set({ loading }),
+  hydrateFavorites: () => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("favorites");
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          set({ favorites: Array.isArray(parsed) ? parsed : [] });
+        } catch (error) {
+          console.warn("Failed to parse favorites from localStorage:", error);
+          localStorage.removeItem("favorites");
+          set({ favorites: [] });
+        }
+      }
+    }
+  },
 
+  setLoading: (loading) => set({ loading }),
   setError: (error) => set({ error }),
+
+  // FIXED: Proper "Up to" price filtering logic
+  filteredVehicles: () => {
+    const { vehicles, filters } = get();
+    return vehicles.filter((car) => {
+      // Brand filter
+      if (
+        filters.brand &&
+        car.brand.toLowerCase() !== filters.brand.toLowerCase()
+      ) {
+        return false;
+      }
+
+      // Price filtering - "Up to" logic (≤ chosen price)
+      if (filters.rentalPrice !== undefined) {
+        const maxPrice = Number(filters.rentalPrice);
+        const carPrice = Number(car.rentalPrice);
+        if (carPrice > maxPrice) {
+          // ✅ FIXED: Show cars UP TO this price
+          return false;
+        }
+      }
+
+      // Mileage filtering
+      if (filters.minMileage !== undefined) {
+        const carMileage = Number(car.mileage);
+        const minMileage = Number(filters.minMileage);
+        if (carMileage < minMileage) {
+          return false;
+        }
+      }
+
+      if (filters.maxMileage !== undefined) {
+        const carMileage = Number(car.mileage);
+        const maxMileage = Number(filters.maxMileage);
+        if (carMileage > maxMileage) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+  },
 }));
 
 export default useCarStore;

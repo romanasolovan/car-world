@@ -1,0 +1,56 @@
+.noResSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem; /* ~20px */
+  text-align: center;
+  padding: 2rem;
+}
+
+.iconWrapper {
+  width: 4rem; /* 64px */
+  height: 4rem;
+  background-color: #f3f4f6; /* gray-100 */
+  border-radius: 9999px; /* fully rounded */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  width: 2rem; /* 32px */
+  height: 2rem;
+  color: #9ca3af; /* gray-400 */
+}
+
+.messageBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* ~8px */
+  max-width: 28rem; /* ~448px */
+}
+
+.title {
+  font-size: 1.125rem; /* text-lg */
+  font-weight: 600; /* semibold */
+  color: #374151; /* gray-700 */
+}
+
+.message {
+  color: #6b7280; /* gray-500 */
+  font-size: 0.95rem;
+}
+
+.resetBtn {
+  padding: 0.5rem 1.5rem; /* px-6 py-2 */
+  background-color: #3b82f6; /* blue-500 */
+  color: white;
+  border: none;
+  border-radius: 0.5rem; /* rounded-lg */
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.resetBtn:hover {
+  background-color: #2563eb; /* blue-600 */
+}

@@ -18,11 +18,20 @@
   flex-direction: column;
   border-radius: 12px;
   overflow: hidden;
+
+  background: white;
+  transition: all 0.2s ease;
 }
 
-.carId:hover {
+/* .carId:hover {
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
   transform: translateY(-4px);
+} */
+
+.carId:hover {
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
 }
 
 .heartBtn {

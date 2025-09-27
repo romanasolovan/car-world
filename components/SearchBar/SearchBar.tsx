@@ -1,17 +1,15 @@
-import { CarFilters, FiltersState } from "@/types/filters";
+import { FiltersState } from "@/types/filters";
 import React from "react";
 import css from "./SearchBar.module.css";
 import CustomSelect from "../CustomSelect/CustomSelect";
 
 interface SearchBarProps {
   filters: FiltersState;
-  setFilters: React.Dispatch<React.SetStateAction<CarFilters>>;
+  setFilters: React.Dispatch<React.SetStateAction<FiltersState>>;
   onSearch: () => void;
   brands: string[];
   prices: number[];
 }
-
-//  filtering, fixing (,) issues!!!!
 
 function SearchBar({
   filters,
@@ -20,34 +18,72 @@ function SearchBar({
   brands,
   prices,
 }: SearchBarProps) {
+  // Format number with commas (1000 -> 1,000)
+  const formatWithCommas = (value: string): string => {
+    // Remove all non-digits
+    const numbers = value.replace(/\D/g, "");
+    if (numbers === "") return "";
+
+    // Add commas every 3 digits
+    return numbers.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
+  // Handle mileage input with auto-formatting
+  const handleMileageChange = (
+    value: string,
+    field: "minMileage" | "maxMileage"
+  ) => {
+    const formatted = formatWithCommas(value);
+    setFilters((prev) => ({
+      ...prev,
+      [field]: formatted || undefined,
+    }));
+  };
+
+  // Handle Enter key press for search
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      onSearch();
+    }
+  };
   return (
     <div className={css.searchBar}>
-      {/* Car Brand Select*/}
-
+      {/* Car Brand Select */}
       <CustomSelect
         label="Car Brand"
         value={filters.brand ?? ""}
-        onChange={(val) => setFilters({ ...filters, brand: val })}
+        onChange={(val) =>
+          setFilters((prev) => ({
+            ...prev,
+            brand: val || undefined,
+          }))
+        }
         options={[
           { label: "Choose a brand", value: "" },
           ...brands.map((b) => ({ label: b, value: b })),
         ]}
       />
 
-      {/* Car Brand Select*/}
-
+      {/* Rental Price Select */}
       <CustomSelect
         label="Price/ 1 hour"
-        value={filters.rentalPrices ?? ""}
-        onChange={(val) => setFilters({ ...filters, rentalPrices: val })}
+        value={filters.rentalPrice ?? ""}
+        onChange={(val) =>
+          setFilters((prev) => ({
+            ...prev,
+            rentalPrice: val ? String(val) : undefined,
+          }))
+        }
         options={[
           { label: "Choose a price", value: "" },
-          ...prices.map((p) => ({ label: `${p} USD/hour`, value: String(p) })),
+          ...prices.map((p) => ({
+            label: `Up to $${p}`,
+            value: String(p),
+          })),
         ]}
       />
 
-      {/* mileage input */}
-
+      {/* Mileage inputs */}
       <div className={css.inputs}>
         <label className={css.groupName}>Сar mileage / km</label>
 
@@ -60,14 +96,10 @@ function SearchBar({
               type="text"
               placeholder=""
               value={filters.minMileage || ""}
-              onChange={(e) => {
-                const rawValue = e.target.value;
-                const cleaned = rawValue.replace(/[^0-9,.\s]/g, "");
-                setFilters({
-                  ...filters,
-                  minMileage: cleaned || undefined,
-                });
-              }}
+              onChange={(e) =>
+                handleMileageChange(e.target.value, "minMileage")
+              }
+              onKeyDown={handleKeyPress}
               aria-label="Minimum mileage"
             />
           </div>
@@ -80,14 +112,10 @@ function SearchBar({
               type="text"
               placeholder=""
               value={filters.maxMileage || ""}
-              onChange={(e) => {
-                const rawValue = e.target.value;
-                const cleaned = rawValue.replace(/[^0-9,.\s]/g, "");
-                setFilters({
-                  ...filters,
-                  maxMileage: cleaned || undefined,
-                });
-              }}
+              onChange={(e) =>
+                handleMileageChange(e.target.value, "maxMileage")
+              }
+              onKeyDown={handleKeyPress}
               aria-label="Maximum mileage"
             />
           </div>

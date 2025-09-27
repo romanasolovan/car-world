@@ -6,35 +6,77 @@ import css from "./CarList.module.css";
 import Image from "next/image";
 import Link from "next/link";
 
-// function to add favorites to a separete components + styling in my manner
-
 interface CarListProps {
   cars: Car[];
 }
 
 function CarList({ cars }: CarListProps) {
-  const [favorites, setFavorites] = useState<string[]>(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("favorites");
-      return saved ? JSON.parse(saved) : [];
-    }
-    return [];
-  });
+  const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
 
+  // Load favorite IDs on mount
   useEffect(() => {
-    const saved = localStorage.getItem("favorites");
-    if (saved) {
-      setFavorites(JSON.parse(saved));
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("favoriteIds");
+      if (saved) {
+        try {
+          setFavoriteIds(JSON.parse(saved));
+        } catch {
+          setFavoriteIds([]);
+        }
+      }
     }
   }, []);
 
-  const toggleFavorite = (id: string) => {
-    setFavorites((prev) => {
-      const updated = prev.includes(id)
-        ? prev.filter((fav) => fav !== id)
-        : [...prev, id];
-      localStorage.setItem("favorites", JSON.stringify(updated)); // save immediately
-      return updated;
+  const toggleFavorite = (car: Car) => {
+    const carId = String(car.id);
+
+    // Use callback to avoid state updates during render
+    setFavoriteIds((prevIds) => {
+      const isCurrentlyFavorite = prevIds.includes(carId);
+      let updatedIds: string[];
+
+      if (isCurrentlyFavorite) {
+        updatedIds = prevIds.filter((id) => id !== carId);
+      } else {
+        updatedIds = [...prevIds, carId];
+      }
+
+      // Perform localStorage updates in a timeout to avoid setState during render
+      setTimeout(() => {
+        // Save IDs to localStorage
+        localStorage.setItem("favoriteIds", JSON.stringify(updatedIds));
+
+        // Get existing favorite car objects
+        const existingFavorites = JSON.parse(
+          localStorage.getItem("favorites") || "[]"
+        );
+        let updatedFavorites: Car[];
+
+        if (isCurrentlyFavorite) {
+          // Remove car object from favorites
+          updatedFavorites = existingFavorites.filter(
+            (favCar: Car) => String(favCar.id) !== carId
+          );
+        } else {
+          // Add car object to favorites (avoid duplicates)
+          const carExists = existingFavorites.some(
+            (favCar: Car) => String(favCar.id) === carId
+          );
+          if (!carExists) {
+            updatedFavorites = [...existingFavorites, car];
+          } else {
+            updatedFavorites = existingFavorites;
+          }
+        }
+
+        // Save full car objects to localStorage
+        localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+
+        // Dispatch event to update header counter
+        window.dispatchEvent(new Event("favoritesChanged"));
+      }, 0);
+
+      return updatedIds;
     });
   };
 
@@ -43,23 +85,23 @@ function CarList({ cars }: CarListProps) {
       <ul className={css.carCard}>
         {cars.map((car) => (
           <li key={car.id} className={css.carId}>
-            {/* heart svg */}
+            {/* Heart button */}
             <button
               className={`${css.heartBtn} ${
-                favorites.includes(String(car.id)) ? css.active : ""
+                favoriteIds.includes(String(car.id)) ? css.active : ""
               }`}
-              onClick={() => toggleFavorite(String(car.id))}
+              onClick={() => toggleFavorite(car)}
               aria-label={
-                favorites.includes(String(car.id))
+                favoriteIds.includes(String(car.id))
                   ? "Remove from favorites"
                   : "Add to favorites"
               }
             >
               <Image
                 src={
-                  favorites.includes(String(car.id))
-                    ? "/active-heart.svg" // filled heart
-                    : "/default-heart.svg" // outline heart (always visible)
+                  favoriteIds.includes(String(car.id))
+                    ? "/active-heart.svg"
+                    : "/default-heart.svg"
                 }
                 alt="favorite"
                 width={16}
@@ -69,7 +111,7 @@ function CarList({ cars }: CarListProps) {
 
             {/* Car Image */}
             <div className={css.carImg}>
-              {car.img && (
+              {car.img ? (
                 <Image
                   src={car.img}
                   className={css.img}
@@ -77,6 +119,21 @@ function CarList({ cars }: CarListProps) {
                   width={300}
                   height={268}
                 />
+              ) : (
+                <div
+                  className={css.img}
+                  style={{
+                    width: 300,
+                    height: 268,
+                    backgroundColor: "#f0f0f0",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "#666",
+                  }}
+                >
+                  No Image
+                </div>
               )}
             </div>
 
@@ -122,7 +179,7 @@ function CarList({ cars }: CarListProps) {
 
                 <div className={css.block}>
                   <p>{car.type}</p>
-                  <p>{car.mileage?.toLocaleString("fr-FR")} km</p>
+                  <p>{car.mileage?.toLocaleString("en-US")} km</p>
                 </div>
               </div>
             </div>

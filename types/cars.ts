@@ -3,7 +3,7 @@ export interface Car {
   brand: string;
   model?: string;
   year?: number;
-  rentalPrice?: number;
+  rentalPrice: string;
   mileage?: number;
   img?: string;
   description?: string;

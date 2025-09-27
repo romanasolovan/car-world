@@ -1,17 +1,176 @@
-.loadBtn {
-  display: flex;
-  border: 1px solid var(--button);
-  border-radius: 12px;
-  padding: 12px 51px;
-  /* width: 156px; */
-  height: 44px;
+/* DESKTOP/LAPTOP BASE STYLES (1024px+) */
+.catalogContainer {
+  padding: 40px 120px;
+  max-width: 1440px;
   margin: 0 auto;
+}
 
+.searchSection {
+  margin-bottom: 48px;
+}
+
+.resultsSection {
+  margin-bottom: 40px;
+}
+
+.loadBtn {
+  background: var(--button);
+  color: var(--white);
+  border: none;
+  border-radius: 12px;
+  padding: 12px 32px;
   font-family: var(--font-family);
   font-weight: 600;
   font-size: 16px;
   line-height: 125%;
-  color: var(--main);
-  margin-top: 80px;
-  margin-bottom: 100px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 120px;
+}
+
+.loadBtn:hover {
+  background: var(--button-hover);
+  transform: translateY(-1px);
+}
+
+.loadBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Loading state in button */
+.loadBtn .spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Results count/status */
+.resultsStatus {
+  font-family: var(--font-family);
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+/* TABLET STYLES (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .catalogContainer {
+    padding: 32px 60px;
+  }
+
+  .searchSection {
+    margin-bottom: 40px;
+  }
+
+  .resultsSection {
+    margin-bottom: 32px;
+  }
+
+  .loadBtn {
+    padding: 12px 28px;
+    font-size: 15px;
+  }
+
+  .resultsStatus {
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+}
+
+/* MOBILE STYLES (375px - 767px) */
+@media (min-width: 375px) and (max-width: 767px) {
+  .catalogContainer {
+    padding: 24px 16px;
+  }
+
+  .searchSection {
+    margin-bottom: 32px;
+  }
+
+  .resultsSection {
+    margin-bottom: 24px;
+  }
+
+  /* Load More button for mobile */
+  .loadBtn {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    font-size: 16px;
+  }
+
+  .resultsStatus {
+    font-size: 12px;
+    margin-bottom: 16px;
+  }
+}
+
+/* VERY SMALL MOBILE (below 375px) */
+@media (max-width: 374px) {
+  .catalogContainer {
+    padding: 20px 12px;
+  }
+
+  .searchSection {
+    margin-bottom: 28px;
+  }
+
+  .loadBtn {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}
+
+/* LOADING STATES */
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+}
+
+.errorContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.errorMessage {
+  color: var(--error, #ef4444);
+  font-family: var(--font-family);
+  font-size: 16px;
+}
+
+/* Mobile-specific loading */
+@media (max-width: 767px) {
+  .loadingContainer {
+    padding: 40px 16px;
+  }
+
+  .errorContainer {
+    padding: 32px 16px;
+  }
+
+  .errorMessage {
+    font-size: 14px;
+  }
 }
