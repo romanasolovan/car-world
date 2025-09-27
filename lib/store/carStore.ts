@@ -27,7 +27,7 @@ interface CarStore {
 }
 
 const defaultFilters: CarFilters = {
-  brand: undefined, // Changed from "" to undefined for consistency
+  brand: undefined,
   rentalPrice: undefined,
   minMileage: undefined,
   maxMileage: undefined,
@@ -122,7 +122,7 @@ const useCarStore = create<CarStore>((set, get) => ({
         const maxPrice = Number(filters.rentalPrice);
         const carPrice = Number(car.rentalPrice);
         if (carPrice > maxPrice) {
-          // ✅ FIXED: Show cars UP TO this price
+          //  FIXED: Show cars UP TO this price
           return false;
         }
       }

@@ -2,7 +2,7 @@
 
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import React from "react";
-// import * as Yup from "yup";
+import * as Yup from "yup";
 import css from "./CarRentalForm.module.css";
 import DateField from "../CustomDatePicker/CustomDatePicker";
 
@@ -22,15 +22,18 @@ const BookingForm = () => {
     date: "",
     comment: "",
   };
-
-  //   const validationSchema = Yup.object({
-  //     name: Yup.string().required("Name is required"),
-  //     email: Yup.string()
-  //       .email("Invalid email address")
-  //       .required("Email is required"),
-  //     date: Yup.date().required("Date is required"),
-  //     comment: Yup.string(),
-  //   });
+  // finish validation - email with @ | fix date and comment input + styling
+  const validationSchema = Yup.object({
+    name: Yup.string()
+      .min(2, "Minimum 2 characters!")
+      .max(20, "Maximum 20 characters!")
+      .required("Name is required!"),
+    email: Yup.string()
+      .email("Invalid email address!")
+      .required("Email is required!"),
+    date: Yup.date().required("Date is required!"),
+    comment: Yup.string(),
+  });
 
   const handleSubmit = (
     values: FormValues,
@@ -44,7 +47,7 @@ const BookingForm = () => {
     <Formik<FormValues>
       initialValues={initialValues}
       onSubmit={handleSubmit}
-      //   validationSchema={validationSchema}
+      validationSchema={validationSchema}
     >
       <Form className={css.form}>
         <h3 className={css.formTitle}>Book your car now</h3>

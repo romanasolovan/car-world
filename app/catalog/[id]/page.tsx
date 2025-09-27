@@ -7,6 +7,7 @@ import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import css from "./CarCardDetails.module.css";
 import BookingForm from "@/components/CarRentalForm/CarRentalForm";
+import Loader from "@/components/Loader/Loader";
 
 function CarDetailsPage() {
   const { id } = useParams<{ id: string }>();
@@ -94,7 +95,8 @@ function CarDetailsPage() {
     });
   };
 
-  if (loading) return <p>Loading...</p>;
+  // if (loading) return <p>Loading...</p>;
+  if (loading) return <Loader />;
   if (error || !car) return <p>{error || "Car not found"}</p>;
 
   return (

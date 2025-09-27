@@ -83,3 +83,15 @@
   position: relative;
   left: 190px;
 }
+
+.sendBtn:hover {
+  background: var(--button-hover);
+  transform: translateY(-2px);
+}
+
+.error {
+  font-family: var(--second-family);
+  color: #ef4444;
+  font-size: 12px;
+  font-weight: 500;
+}
