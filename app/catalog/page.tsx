@@ -163,7 +163,7 @@ function CatalogPage() {
 
       {/* Load More Button */}
       {hasMore && vehicles.length > 0 && (
-        <div style={{ textAlign: "center", marginTop: "24px" }}>
+        <div className={css.btnContainer}>
           <button
             onClick={loadMore}
             className={css.loadBtn}

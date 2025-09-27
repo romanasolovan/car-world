@@ -37,11 +37,16 @@
 .modalTitle {
   font-size: 24px;
   font-weight: 600;
-  color: #1f2937;
+  color: var(--main);
+
   display: flex;
   align-items: center;
   gap: 12px;
   margin: 0;
+  font-family: var(--second-family);
+
+  line-height: 120%;
+  text-align: center;
 }
 
 .heartIcon {
@@ -98,30 +103,37 @@
 .emptyTitle {
   font-size: 20px;
   font-weight: 600;
-  color: #374151;
+
+  color: var(--main);
   margin: 0;
+  font-family: var(--font-family);
+
+  line-height: 125%;
 }
 
 .emptyMessage {
-  color: #6b7280;
-  font-size: 16px;
+  color: var(--gray);
+  font-family: var(--second-family);
+  font-size: 14px;
   margin: 0 0 24px 0;
   max-width: 400px;
 }
 
 .catalogBtn {
-  background-color: #3b82f6;
+  background-color: var(--button);
   color: white;
   padding: 12px 24px;
-  border-radius: 8px;
+  border-radius: 12px;
   text-decoration: none;
   font-weight: 500;
   transition: background-color 0.2s ease;
   display: inline-block;
+  font-family: var(--font-family);
 }
 
 .catalogBtn:hover {
-  background-color: #2563eb;
+  background-color: var(--button-hover);
+  transform: translateY(-1px);
 }
 
 /* Favorites Grid */
@@ -218,8 +230,12 @@
 .carPrice {
   font-size: 18px;
   font-weight: 600;
-  color: #059669;
+
   margin: 4px 0;
+
+  font-family: var(--font-family);
+  line-height: 133%;
+  color: var(--button);
 }
 
 .carMeta {
@@ -247,21 +263,32 @@
 }
 
 .viewBtn {
-  background-color: #f8fafc;
   color: #374151;
   padding: 10px 16px;
-  border-radius: 6px;
+
   text-decoration: none;
-  font-weight: 500;
+
   text-align: center;
   transition: all 0.2s ease;
   margin-top: 8px;
-  font-size: 14px;
+
+  border-radius: 12px;
+  /* padding: 12px 99px; */
+  background: var(--button);
+
+  font-weight: 600;
+
+  cursor: pointer;
+  border: 1px solid var(--button);
+  font-family: var(--font-family);
+  font-size: 16px;
+  line-height: 125%;
+  color: var(--white);
 }
 
 .viewBtn:hover {
-  background-color: #e2e8f0;
-  color: #1f2937;
+  background: var(--button-hover);
+  color: var(--white);
 }
 
 /* Responsive Design */

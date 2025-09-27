@@ -13,16 +13,23 @@
   margin-bottom: 40px;
 }
 
+.btnContainer {
+  text-align: center;
+  margin-top: 80px;
+  margin-bottom: 124px;
+}
+
 .loadBtn {
-  background: var(--button);
-  color: var(--white);
-  border: none;
+  border: 1px solid var(--button);
   border-radius: 12px;
-  padding: 12px 32px;
+
+  padding: 12px 51px;
+
   font-family: var(--font-family);
   font-weight: 600;
   font-size: 16px;
   line-height: 125%;
+  color: var(--main);
   cursor: pointer;
   transition: all 0.2s ease;
   display: inline-flex;
@@ -33,7 +40,8 @@
 }
 
 .loadBtn:hover {
-  background: var(--button-hover);
+  border: 1px solid var(--button-hover);
+
   transform: translateY(-1px);
 }
 

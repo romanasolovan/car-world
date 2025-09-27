@@ -160,7 +160,7 @@ function FavoritesModal({ isOpen, onClose }: FavoritesModalProps) {
             <div className={css.emptyState}>
               <div className={css.emptyIcon}>
                 <Image
-                  src="/default-heart.svg"
+                  src="/favorites-heart.svg"
                   alt="No favorites"
                   width={48}
                   height={45}

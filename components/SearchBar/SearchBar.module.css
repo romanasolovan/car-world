@@ -114,4 +114,12 @@
   font-size: 16px;
   line-height: 125%;
   color: var(--white);
+
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.searchBtn:hover {
+  transform: translateY(-1px);
+  background: var(--button-hover);
 }

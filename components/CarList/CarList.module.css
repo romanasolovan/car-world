@@ -142,10 +142,19 @@
   border-radius: 12px;
   padding: 12px 99px;
   background: var(--button);
-  color: #fff;
   font-weight: 600;
   border: none;
   cursor: pointer;
+  font-family: var(--font-family);
+  font-size: 12px;
   width: 276px;
+  text-align: center;
+  line-height: 125%;
+  color: var(--white);
   /* height: 44px; */
+}
+
+.readMoreBtn:hover {
+  background: var(--button-hover);
+  color: var(--white);
 }
