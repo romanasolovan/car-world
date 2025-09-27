@@ -9,6 +9,8 @@ interface FavoritesModalProps {
   onClose: () => void;
 }
 
+// when favorites are removed they also are removed from the car list. fix bug
+
 function FavoritesModal({ isOpen, onClose }: FavoritesModalProps) {
   const [favorites, setFavorites] = useState<Car[]>([]);
 

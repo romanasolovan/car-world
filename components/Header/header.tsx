@@ -89,7 +89,6 @@ function Header() {
                 Catalog
               </Link>
 
-              {/* ✅ Heart moved inside navigation for one-line layout */}
               <button
                 className={css.favoritesBtn}
                 onClick={openFavorites}
@@ -100,7 +99,7 @@ function Header() {
                     src={
                       favoritesCount > 0
                         ? "/active-heart.svg"
-                        : "/default-heart.svg"
+                        : "/favorites-heart.svg"
                     }
                     alt="Favorites"
                     width={20}

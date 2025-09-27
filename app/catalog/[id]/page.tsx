@@ -137,7 +137,7 @@ function CarDetailsPage() {
             }
           >
             <Image
-              src={isFavorite ? "/active-heart.svg" : "/default-heart.svg"}
+              src={isFavorite ? "/active-heart.svg" : "/favorites-heart.svg"}
               alt="favorite"
               width={24}
               height={22}
