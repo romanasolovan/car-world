@@ -1,4 +1,3 @@
-/* DESKTOP/LAPTOP BASE STYLES (1024px+) */
 .carCard {
   display: flex;
   gap: 40px;
@@ -81,19 +80,31 @@
 
 .mainDetails {
   font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 28px;
-  line-height: 130%;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 133%;
   color: var(--main);
-  margin-bottom: 16px;
+}
+
+.id {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  color: var(--gray);
 }
 
 .infoRow {
+  margin-top: 11px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
   gap: 16px;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  color: var(--main);
 }
 
 .rentPrice {
@@ -106,9 +117,10 @@
 
 .descr {
   font-family: var(--font-family);
+  font-weight: 500;
   font-size: 16px;
-  line-height: 150%;
-  color: var(--text-secondary);
+  line-height: 125%;
+  color: var(--main);
 }
 
 /* Rental Details */
@@ -133,7 +145,7 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 16px;
 }
 
 .detailsItem {
@@ -142,178 +154,4 @@
   gap: 8px;
   font-family: var(--font-family);
   font-size: 14px;
-  color: var(--text-secondary);
-}
-
-/* TABLET STYLES (768px - 1023px) */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .carCard {
-    flex-direction: column;
-    gap: 32px;
-    padding: 32px 60px;
-  }
-
-  .cardLeftSide,
-  .cardRightSide {
-    flex: none;
-    max-width: none;
-    min-width: 0;
-    width: 100%;
-  }
-
-  .imageContainer {
-    margin-bottom: 20px;
-  }
-
-  .carImg {
-    max-height: 400px;
-  }
-
-  .heartBtn {
-    width: 44px;
-    height: 44px;
-    top: 16px;
-    right: 16px;
-  }
-
-  .mainDetails {
-    font-size: 24px;
-  }
-
-  .infoRow {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .rentPrice {
-    font-size: 22px;
-  }
-
-  .rentalDetails {
-    gap: 20px;
-  }
-}
-
-/* MOBILE STYLES (375px - 767px) */
-@media (min-width: 375px) and (max-width: 767px) {
-  .carCard {
-    flex-direction: column;
-    gap: 24px;
-    padding: 24px 16px;
-  }
-
-  .cardLeftSide,
-  .cardRightSide {
-    width: 100%;
-  }
-
-  .imageContainer {
-    margin-bottom: 16px;
-  }
-
-  .carImg {
-    max-height: 300px;
-    border-radius: 8px;
-  }
-
-  .heartBtn {
-    width: 40px;
-    height: 40px;
-    top: 12px;
-    right: 12px;
-  }
-
-  .heartBtn img {
-    width: 20px;
-    height: 18px;
-  }
-
-  .carDetails {
-    margin-bottom: 24px;
-  }
-
-  .mainDetails {
-    font-size: 20px;
-    line-height: 125%;
-    margin-bottom: 12px;
-  }
-
-  .infoRow {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-    margin-bottom: 12px;
-  }
-
-  .rentPrice {
-    font-size: 20px;
-    margin-bottom: 12px;
-  }
-
-  .descr {
-    font-size: 15px;
-    line-height: 145%;
-  }
-
-  .rentalDetails {
-    gap: 16px;
-  }
-
-  .subTitle {
-    font-size: 16px;
-    margin-bottom: 8px;
-  }
-
-  .detailsItem {
-    font-size: 13px;
-  }
-
-  .detailsList {
-    gap: 6px;
-  }
-}
-
-/* VERY SMALL MOBILE (below 375px) */
-@media (max-width: 374px) {
-  .carCard {
-    padding: 20px 12px;
-    gap: 20px;
-  }
-
-  .carImg {
-    max-height: 250px;
-  }
-
-  .heartBtn {
-    width: 36px;
-    height: 36px;
-    top: 10px;
-    right: 10px;
-  }
-
-  .heartBtn img {
-    width: 18px;
-    height: 16px;
-  }
-
-  .mainDetails {
-    font-size: 18px;
-  }
-
-  .rentPrice {
-    font-size: 18px;
-  }
-
-  .descr {
-    font-size: 14px;
-  }
-
-  .subTitle {
-    font-size: 15px;
-  }
-
-  .detailsItem {
-    font-size: 12px;
-  }
 }

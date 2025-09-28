@@ -18,7 +18,8 @@ type Props = {
 };
 
 export default function DateField({ name }: Props) {
-  const { setFieldValue } = useFormikContext<BookingFormValues>();
+  const { setFieldValue, setFieldTouched } =
+    useFormikContext<BookingFormValues>();
   const [field, meta] = useField<string>({ name: name as string });
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
@@ -55,17 +56,32 @@ export default function DateField({ name }: Props) {
     };
   }, []);
 
+  // Get tomorrow as the minimum selectable date
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
   return (
     <div className={css.wrapper} ref={wrapperRef}>
       <div className={css.inputRow}>
         <input
           type="text"
-          className={css.input}
-          placeholder="Booking Date"
+          className={`${css.input} ${
+            meta.touched && meta.error ? css.inputError : ""
+          }`}
+          placeholder="Booking Date*"
           value={displayValue}
-          onFocus={() => setOpen(true)}
-          onClick={() => setOpen(true)}
-          readOnly // prevents keyboard typing, enforces picking from calendar?????
+          onFocus={() => {
+            setOpen(true);
+            setFieldTouched(name, true);
+          }}
+          onClick={() => {
+            setOpen(true);
+            setFieldTouched(name, true);
+          }}
+          onBlur={() => {
+            setFieldTouched(name, true);
+          }}
+          readOnly
           aria-haspopup="dialog"
           aria-label="Booking date"
         />
@@ -73,7 +89,10 @@ export default function DateField({ name }: Props) {
         <button
           type="button"
           className={css.calendarToggle}
-          onClick={() => setOpen((s) => !s)}
+          onClick={() => {
+            setOpen((s) => !s);
+            setFieldTouched(name, true);
+          }}
           aria-label="Toggle calendar"
         >
           📅
@@ -88,17 +107,21 @@ export default function DateField({ name }: Props) {
             showOutsideDays
             mode="single"
             selected={selectedDate}
+            disabled={{ before: tomorrow }}
             onSelect={(date) => {
-              setFieldValue(name, date ? date.toISOString() : "");
+              if (date) {
+                const dateString = date.toISOString().split("T")[0];
+                setFieldValue(name, dateString);
+                setFieldTouched(name, true);
+              } else {
+                setFieldValue(name, "");
+                setFieldTouched(name, true);
+              }
               setOpen(false);
             }}
             className={css.calendar}
           />
         </div>
-      )}
-
-      {meta.touched && meta.error && (
-        <div className={css.error}>{meta.error}</div>
       )}
     </div>
   );

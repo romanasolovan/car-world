@@ -2,11 +2,11 @@
   border: 1px solid var(--gray-light);
   border-radius: 10px;
   padding: 32px;
-
   height: 488px;
-  margin-top: 40px;
   display: flex;
   flex-direction: column;
+  max-width: 640px;
+  margin: 0 auto;
 }
 
 .formTitle {
@@ -45,26 +45,42 @@
   padding: 12px 20px;
   background: var(--inputs);
   border: none;
-
   font-family: var(--font-family);
   font-weight: 500;
   font-size: 16px;
   line-height: 125%;
   color: var(--gray);
+  transition: all 0.2s ease;
+}
+
+.input:focus {
+  outline: 2px solid var(--button);
+  outline-offset: -2px;
+}
+
+/* Error state for inputs */
+.inputError {
+  outline: 2px solid #ef4444 !important;
+  outline-offset: -2px;
 }
 
 .textarea {
   border-radius: 12px;
   padding: 12px 20px 56px;
-
   font-family: var(--font-family);
   font-weight: 500;
   font-size: 16px;
   line-height: 125%;
   color: var(--gray);
-
   background: var(--inputs);
   border: none;
+  resize: none;
+  transition: all 0.2s ease;
+}
+
+.textarea:focus {
+  outline: 2px solid var(--button);
+  outline-offset: -2px;
 }
 
 .sendBtn {
@@ -72,21 +88,28 @@
   padding: 12px 51px;
   width: 156px;
   height: 44px;
+  margin: 0 auto;
+  margin-top: 8px;
   background: var(--button);
-
   font-family: var(--font-family);
   font-weight: 600;
   font-size: 16px;
   line-height: 125%;
   color: var(--white);
-
-  position: relative;
-  left: 190px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
 }
 
-.sendBtn:hover {
+.sendBtn:hover:not(:disabled) {
   background: var(--button-hover);
   transform: translateY(-2px);
+}
+
+.sendBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .error {
@@ -94,4 +117,6 @@
   color: #ef4444;
   font-size: 12px;
   font-weight: 500;
+  margin-top: 4px;
+  animation: slideIn 0.3s ease;
 }

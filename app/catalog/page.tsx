@@ -15,7 +15,7 @@ import NoResults from "@/components/NoResults/NoResults";
 const PAGE_LIMIT = 12;
 
 function CatalogPage() {
-  // SearchBar filters (without page/limit)
+  // SearchBar filters
   const [filters, setFilters] = useState<FiltersState>({
     brand: undefined,
     rentalPrice: undefined,
@@ -25,7 +25,7 @@ function CatalogPage() {
 
   const fixedPrices = [30, 40, 50, 60, 70, 80];
 
-  // API filters (with page/limit)
+  // API filters
   const [appliedFilters, setAppliedFilters] = useState<CarFilters>({
     ...filters,
     page: 1,
@@ -36,7 +36,7 @@ function CatalogPage() {
   const [hasSearched, setHasSearched] = useState(false);
   const carListRef = useRef<HTMLDivElement>(null);
 
-  // Zustand store - Use vehicles directly (API already filtered them)
+  // Zustand store
   const vehicles = useCarStore((state) => state.vehicles);
   const setVehicles = useCarStore((state) => state.setVehicles);
   const appendVehicles = useCarStore((state) => state.appendVehicles);

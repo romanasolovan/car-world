@@ -1,24 +1,63 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.inputRow {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .input {
   border-radius: 12px;
-  padding: 12px 20px;
   background: var(--inputs);
   border: none;
+
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 50px 12px 20px;
 
   font-family: var(--font-family);
   font-weight: 500;
   font-size: 16px;
   line-height: 125%;
   color: var(--gray);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
 
-  width: 100%;
-  box-sizing: border-box;
+.input:focus {
+  outline: 2px solid var(--button);
+  outline-offset: -2px;
+}
+
+.input::placeholder {
+  color: var(--gray);
+}
+
+.calendarToggle {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.2s ease;
 }
 
 .popover {
   position: absolute;
+  left: 220;
   z-index: 1000;
-  top: calc(100% + 8px);
-  left: 275;
+  top: calc(100% + 2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  margin-top: 4px;
   background: var(--white);
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
@@ -36,14 +75,4 @@
   line-height: 120%;
   text-align: center;
   color: var(--main);
-}
-
-.calendarToggle {
-  position: absolute;
-  right: 12px;
-  top: 10px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 20px;
 }

@@ -6,8 +6,6 @@ import * as Yup from "yup";
 import css from "./CarRentalForm.module.css";
 import DateField from "../CustomDatePicker/CustomDatePicker";
 
-// look over the validation and see what can be improved or added?
-
 export interface FormValues {
   name: string;
   email: string;
@@ -22,25 +20,43 @@ const BookingForm = () => {
     date: "",
     comment: "",
   };
-  // finish validation - email with @ | fix date and comment input + styling
+
+  // Enhanced validation schema
   const validationSchema = Yup.object({
     name: Yup.string()
       .min(2, "Minimum 2 characters!")
       .max(20, "Maximum 20 characters!")
+      .matches(/^[a-zA-Z\s]+$/, "Name can only contain letters and spaces!")
       .required("Name is required!"),
     email: Yup.string()
-      .email("Invalid email address!")
+      .matches(
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        "Email must contain @ and be a valid email address!"
+      )
       .required("Email is required!"),
-    date: Yup.date().required("Date is required!"),
-    comment: Yup.string(),
+    date: Yup.string()
+      .required("Booking date is required!")
+      .test("is-future-date", "Date must be in the future!", function (value) {
+        if (!value) return false;
+        const selectedDate = new Date(value);
+        const today = new Date();
+        today.setHours(23, 59, 59, 999); // Set to end of today
+        return selectedDate > today;
+      }),
+    comment: Yup.string().max(500, "Comment cannot exceed 500 characters!"),
   });
 
   const handleSubmit = (
     values: FormValues,
-    { resetForm }: FormikHelpers<FormValues>
+    { resetForm, setSubmitting }: FormikHelpers<FormValues>
   ) => {
     console.log("Form values:", values);
-    resetForm();
+    // Simulate API call
+    setTimeout(() => {
+      alert("Booking submitted successfully!");
+      resetForm();
+      setSubmitting(false);
+    }, 1000);
   };
 
   return (
@@ -49,52 +65,77 @@ const BookingForm = () => {
       onSubmit={handleSubmit}
       validationSchema={validationSchema}
     >
-      <Form className={css.form}>
-        <h3 className={css.formTitle}>Book your car now</h3>
-        <p className={css.formSubtitle}>
-          Stay connected! We are always ready to help you.
-        </p>
+      {({ isSubmitting, errors, touched }) => (
+        <Form className={css.form}>
+          <h3 className={css.formTitle}>Book your car now</h3>
+          <p className={css.formSubtitle}>
+            Stay connected! We are always ready to help you.
+          </p>
 
-        <div className={css.formInputs}>
-          {/* name */}
-          <div className={css.formGroup}>
-            <Field
-              name="name"
-              type="text"
-              placeholder="Name*"
-              className={css.input}
-            />
-            <ErrorMessage name="name" component="div" className={css.error} />
-          </div>
-          {/* email */}
-          <div className={css.formGroup}>
-            <Field
-              name="email"
-              type="email"
-              placeholder="Email*"
-              className={css.input}
-            />
-            <ErrorMessage name="email" component="div" className={css.error} />
-          </div>
-          {/* date */}
+          <div className={css.formInputs}>
+            {/* Name Field */}
+            <div className={css.formGroup}>
+              <Field
+                name="name"
+                type="text"
+                placeholder="Name*"
+                className={`${css.input} ${
+                  errors.name && touched.name ? css.inputError : ""
+                }`}
+              />
+              <ErrorMessage name="name" component="div" className={css.error} />
+            </div>
 
-          <div className={css.formGroup}>
-            <DateField name="date" />
+            {/* Email Field */}
+            <div className={css.formGroup}>
+              <Field
+                name="email"
+                type="email"
+                placeholder="Email*"
+                className={`${css.input} ${
+                  errors.email && touched.email ? css.inputError : ""
+                }`}
+              />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className={css.error}
+              />
+            </div>
+
+            {/* Date Field */}
+            <div className={css.formGroup}>
+              <DateField name="date" />
+              <ErrorMessage name="date" component="div" className={css.error} />
+            </div>
+
+            {/* Comment Field */}
+            <div className={css.formGroup}>
+              <Field
+                as="textarea"
+                name="comment"
+                placeholder="Comment"
+                className={`${css.textarea} ${
+                  errors.comment && touched.comment ? css.inputError : ""
+                }`}
+              />
+              <ErrorMessage
+                name="comment"
+                component="div"
+                className={css.error}
+              />
+            </div>
+
+            <button
+              type="submit"
+              className={css.sendBtn}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Sending..." : "Send"}
+            </button>
           </div>
-          {/* comment */}
-          <div className={css.formGroup}>
-            <Field
-              as="textarea"
-              name="comment"
-              placeholder="Comment"
-              className={css.textarea}
-            />
-          </div>
-          <button type="submit" className={css.sendBtn}>
-            Send
-          </button>
-        </div>
-      </Form>
+        </Form>
+      )}
     </Formik>
   );
 };

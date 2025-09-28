@@ -273,7 +273,7 @@
   margin-top: 8px;
 
   border-radius: 12px;
-  /* padding: 12px 99px; */
+
   background: var(--button);
 
   font-weight: 600;
@@ -290,50 +290,3 @@
   background: var(--button-hover);
   color: var(--white);
 }
-
-/* Responsive Design */
-/* @media (max-width: 768px) {
-  .modalOverlay {
-    padding: 10px;
-  }
-  
-  .modalContent {
-    max-height: 95vh;
-  }
-  
-  .modalHeader {
-    padding: 20px 20px 16px 20px;
-  }
-  
-  .modalTitle {
-    font-size: 20px;
-  }
-  
-  .modalBody {
-    padding: 20px;
-  }
-  
-  .favoritesGrid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  
-  .emptyState {
-    padding: 40px 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  .modalHeader {
-    padding: 16px;
-  }
-  
-  .modalBody {
-    padding: 16px;
-  }
-  
-  .modalTitle {
-    font-size: 18px;
-    gap: 8px;
-  }
-} */

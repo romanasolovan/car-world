@@ -13,18 +13,36 @@ interface CarListProps {
 function CarList({ cars }: CarListProps) {
   const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
 
-  // Load favorite IDs on mount
+  // Load favorite IDs on mount and when favorites change
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("favoriteIds");
-      if (saved) {
-        try {
-          setFavoriteIds(JSON.parse(saved));
-        } catch {
+    const loadFavoriteIds = () => {
+      if (typeof window !== "undefined") {
+        const saved = localStorage.getItem("favoriteIds");
+        if (saved) {
+          try {
+            setFavoriteIds(JSON.parse(saved));
+          } catch {
+            setFavoriteIds([]);
+          }
+        } else {
           setFavoriteIds([]);
         }
       }
-    }
+    };
+
+    // Load initially
+    loadFavoriteIds();
+
+    // Listen for favorites changes from other components
+    const handleFavoritesChange = () => {
+      loadFavoriteIds();
+    };
+
+    window.addEventListener("favoritesChanged", handleFavoritesChange);
+
+    return () => {
+      window.removeEventListener("favoritesChanged", handleFavoritesChange);
+    };
   }, []);
 
   const toggleFavorite = (car: Car) => {

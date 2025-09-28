@@ -89,7 +89,7 @@
 }
 
 .option:hover {
-  background: #eee;
+  color: var(--main);
 }
 
 .option:active {
