@@ -105,11 +105,11 @@ const useCarStore = create<CarStore>((set, get) => ({
   setLoading: (loading) => set({ loading }),
   setError: (error) => set({ error }),
 
-  // FIXED: Proper "Up to" price filtering logic
+  // Proper "Up to" price filtering logic
   filteredVehicles: () => {
     const { vehicles, filters } = get();
     return vehicles.filter((car) => {
-      // Brand filter
+      // Brand filtering
       if (
         filters.brand &&
         car.brand.toLowerCase() !== filters.brand.toLowerCase()
@@ -122,7 +122,6 @@ const useCarStore = create<CarStore>((set, get) => ({
         const maxPrice = Number(filters.rentalPrice);
         const carPrice = Number(car.rentalPrice);
         if (carPrice > maxPrice) {
-          //  FIXED: Show cars UP TO this price
           return false;
         }
       }

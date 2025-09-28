@@ -36,7 +36,7 @@ function CatalogPage() {
   const [hasSearched, setHasSearched] = useState(false);
   const carListRef = useRef<HTMLDivElement>(null);
 
-  // Zustand store
+  // Zustand store (2)
   const vehicles = useCarStore((state) => state.vehicles);
   const setVehicles = useCarStore((state) => state.setVehicles);
   const appendVehicles = useCarStore((state) => state.appendVehicles);

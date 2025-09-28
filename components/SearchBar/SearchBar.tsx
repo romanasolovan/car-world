@@ -3,8 +3,6 @@ import React from "react";
 import css from "./SearchBar.module.css";
 import CustomSelect from "../CustomSelect/CustomSelect";
 
-// adapt for all devices
-
 interface SearchBarProps {
   filters: FiltersState;
   setFilters: React.Dispatch<React.SetStateAction<FiltersState>>;

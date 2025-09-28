@@ -3,8 +3,6 @@
 import { PuffLoader } from "react-spinners";
 import css from "./Loader.module.css";
 
-// loader must have better visibility
-
 function Loader({ loading = true }) {
   return (
     <div className={css.loaderWrapper}>
