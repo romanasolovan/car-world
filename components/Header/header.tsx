@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import FavoritesModal from "@/components/Favorites/Favorites";
+import MobileNav from "../MobileNav/MobileNav";
 
 function Header() {
   const pathname = usePathname();
@@ -63,57 +64,68 @@ function Header() {
   return (
     <>
       <header className={css.header}>
-        <Link href="/" aria-label="Home">
-          <svg width={104} height={16}>
-            <use href="/logo.svg" />
-          </svg>
-        </Link>
+        <div className={css.inner}>
+          {/* LEFT: Logo */}
+          <div className={css.left}>
+            <Link href="/" aria-label="Home">
+              <svg width={104} height={16}>
+                <use href="/logo.svg" />
+              </svg>
+            </Link>
+          </div>
 
-        <nav aria-label="Main Navigation">
-          <ul className={css.navigation}>
-            <li className={css.links}>
-              <Link
-                href="/"
-                className={`${css.homelink} ${
-                  pathname === "/" ? css.active : ""
-                }`}
-              >
-                Home
-              </Link>
-              <Link
-                href="/catalog"
-                className={`${css.cataloglink} ${
-                  pathname === "/catalog" ? css.active : ""
-                }`}
-              >
-                Catalog
-              </Link>
+          {/* RIGHT: Navigation + Favorites visible always + Burger only on mobile */}
+          <div className={css.right}>
+            <nav className={css.desktopNav} aria-label="Main Navigation">
+              <ul className={css.navigation}>
+                <li className={css.links}>
+                  <Link
+                    href="/"
+                    className={`${css.homelink} ${
+                      pathname === "/" ? css.active : ""
+                    }`}
+                  >
+                    Home
+                  </Link>
 
-              <button
-                className={css.favoritesBtn}
-                onClick={openFavorites}
-                aria-label={`Open favorites (${favoritesCount} items)`}
-              >
-                <div className={css.heartContainer}>
-                  <Image
-                    src={
-                      favoritesCount > 0
-                        ? "/active-heart.svg"
-                        : "/favorites-heart.svg"
-                    }
-                    alt="Favorites"
-                    width={20}
-                    height={18}
-                    className={css.heartIcon}
-                  />
-                  {favoritesCount > 0 && (
-                    <span className={css.favoritesCount}>{favoritesCount}</span>
-                  )}
-                </div>
-              </button>
-            </li>
-          </ul>
-        </nav>
+                  <Link
+                    href="/catalog"
+                    className={`${css.cataloglink} ${
+                      pathname === "/catalog" ? css.active : ""
+                    }`}
+                  >
+                    Catalog
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+            <button
+              className={css.favoritesBtn}
+              onClick={openFavorites}
+              aria-label={`Open favorites (${favoritesCount} items)`}
+            >
+              <div className={css.heartContainer}>
+                <Image
+                  src={
+                    favoritesCount > 0
+                      ? "/active-heart.svg"
+                      : "/favorites-heart.svg"
+                  }
+                  alt="Favorites"
+                  width={20}
+                  height={18}
+                  className={css.heartIcon}
+                />
+                {favoritesCount > 0 && (
+                  <span className={css.favoritesCount}>{favoritesCount}</span>
+                )}
+              </div>
+            </button>
+
+            {/* Mobile burger component */}
+            <MobileNav pathname={pathname} />
+          </div>
+        </div>
       </header>
 
       <FavoritesModal isOpen={isFavoritesOpen} onClose={closeFavorites} />
