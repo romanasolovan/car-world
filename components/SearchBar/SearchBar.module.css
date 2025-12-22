@@ -1,3 +1,4 @@
+/* ===== DESKTOP (default, 1200px+) ===== */
 .searchBar {
   display: flex;
   align-items: flex-end;
@@ -50,6 +51,7 @@
   user-select: none;
 }
 
+/* DESKTOP: Mileage inputs stuck together in a row */
 .inputGroup {
   display: flex;
   flex-direction: row;
@@ -108,6 +110,8 @@
   border-radius: 12px;
   padding: 12px 51px;
   background: var(--button);
+  border: none;
+  cursor: pointer;
 
   font-family: var(--font-family);
   font-weight: 600;
@@ -122,4 +126,174 @@
 .searchBtn:hover {
   transform: translateY(-1px);
   background: var(--button-hover);
+}
+
+/* ===== TABLET (768px - 1199px) ===== */
+@media screen and (min-width: 768px) and (max-width: 1199px) {
+  .searchBar {
+    /* Switch from flex row to grid with 2 columns */
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+
+    /* Keep your centering feel */
+    justify-content: center;
+    align-items: end;
+
+    /* Prevents it from being too wide */
+    width: 100%;
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+    margin-top: 64px;
+    margin-bottom: 48px;
+  }
+
+  /* Each group (label + select) should fill its cell */
+  .group {
+    width: 100%;
+  }
+
+  /* TABLET: Make mileage section span full width like other inputs */
+  .inputs {
+    grid-column: 1 / -1; /* Span both columns */
+    width: 100%;
+  }
+
+  /* TABLET: Separate mileage inputs with gap, keep in same row */
+  .inputGroup {
+    display: flex;
+    flex-direction: row;
+    gap: 12px; /* Adds space between From and To inputs */
+    width: 100%;
+  }
+
+  .inputWrapper {
+    flex: 1; /* Makes both inputs equal width - each takes 50% */
+    min-width: 0; /* Allows proper flex shrinking */
+  }
+
+  /* TABLET: Style mileage inputs like select boxes */
+  .minInput,
+  .maxInput {
+    width: 100%;
+    max-width: none; /* Remove max-width constraint */
+    border-radius: 12px; /* Both inputs get full rounded corners */
+    border: none; /* Remove the connecting border */
+    background: var(--inputs);
+    padding: 12px 16px 12px 56px;
+    box-sizing: border-box; /* Ensure padding is included in width */
+  }
+
+  /* Search button spans both columns */
+  .searchBtn {
+    grid-column: 1 / -1;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 8px;
+  }
+}
+
+/* ===== MOBILE (up to 767px) ===== */
+@media screen and (max-width: 767px) {
+  .searchBar {
+    /* Stack vertically */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 16px;
+
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 48px;
+    margin-bottom: 40px;
+
+    /* Padding so it doesn't touch screen edges */
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .group {
+    width: 100%;
+  }
+
+  /* MOBILE: Stack mileage inputs vertically */
+  .inputGroup {
+    display: flex;
+    flex-direction: column; /* Changed from row to column */
+    gap: 12px; /* Space between From and To inputs */
+    width: 100%;
+  }
+
+  .inputWrapper {
+    width: 100%; /* Each wrapper takes full width */
+  }
+
+  /* MOBILE: Style mileage inputs like select boxes - separated and stacked */
+  .minInput,
+  .maxInput {
+    width: 100%;
+    max-width: 100%;
+    flex: none; /* Remove flex to allow full width */
+    min-width: 0;
+    border-radius: 12px; /* Both inputs get full rounded corners */
+    border: none; /* Remove all borders */
+    background: var(--inputs);
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 12px 16px 12px 56px;
+  }
+
+  .inputPrefix {
+    left: 12px;
+    font-size: 16px;
+  }
+
+  /* Full width search button on mobile */
+  .searchBtn {
+    width: 100%;
+    margin-top: 8px;
+    padding: 14px 24px;
+  }
+
+  /* Slightly smaller label text on mobile */
+  .groupName {
+    font-size: 11px;
+  }
+}
+
+/* ===== SMALL MOBILE (up to 374px) ===== */
+@media screen and (max-width: 374px) {
+  .searchBar {
+    margin-top: 32px;
+    margin-bottom: 32px;
+    gap: 12px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  /* SMALL MOBILE: Keep inputs stacked and adjust sizing */
+  .inputGroup {
+    gap: 12px;
+  }
+
+  .minInput,
+  .maxInput {
+    padding: 10px 12px 10px 52px;
+    font-size: 15px;
+    border-radius: 12px; /* Full rounded corners */
+  }
+
+  .inputPrefix {
+    left: 10px;
+    font-size: 15px;
+  }
+
+  .searchBtn {
+    padding: 12px 20px;
+    font-size: 15px;
+  }
 }
