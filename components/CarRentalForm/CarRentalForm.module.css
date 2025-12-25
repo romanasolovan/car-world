@@ -2,11 +2,13 @@
   border: 1px solid var(--gray-light);
   border-radius: 10px;
   padding: 32px;
-  height: 488px;
+  height: auto;
+  min-height: 488px;
   display: flex;
   flex-direction: column;
   max-width: 640px;
   margin: 0 auto;
+  transition: padding 0.3s ease;
 }
 
 .formTitle {
@@ -16,6 +18,7 @@
   line-height: 120%;
   color: var(--main);
   margin-bottom: 8px;
+  transition: font-size 0.3s ease;
 }
 
 .formSubtitle {
@@ -25,6 +28,7 @@
   line-height: 125%;
   color: var(--gray);
   margin-bottom: 24px;
+  transition: font-size 0.3s ease;
 }
 
 .formInputs {
@@ -76,6 +80,7 @@
   border: none;
   resize: none;
   transition: all 0.2s ease;
+  min-height: 120px;
 }
 
 .textarea:focus {
@@ -119,4 +124,202 @@
   font-weight: 500;
   margin-top: 4px;
   animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   TABLET ADAPTIVE STYLES (768px - 1024px)
+   ============================================ */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .form {
+    padding: 28px 24px;
+    max-width: 580px;
+    border-radius: 12px;
+  }
+
+  .formTitle {
+    font-size: 19px;
+    margin-bottom: 10px;
+  }
+
+  .formSubtitle {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+
+  .formInputs {
+    gap: 14px;
+  }
+
+  .input {
+    padding: 11px 18px;
+    font-size: 15px;
+    border-radius: 10px;
+  }
+
+  .textarea {
+    padding: 11px 18px 50px;
+    font-size: 15px;
+    border-radius: 10px;
+    min-height: 110px;
+  }
+
+  .sendBtn {
+    width: 148px;
+    height: 42px;
+    padding: 11px 48px;
+    font-size: 15px;
+    margin-top: 12px;
+  }
+}
+
+/* ============================================
+   MOBILE ADAPTIVE STYLES (Below 768px)
+   ============================================ */
+@media (max-width: 767px) {
+  .form {
+    padding: 24px 20px;
+    border-radius: 16px;
+    border-width: 1px;
+    max-width: 100%;
+    margin: 0 16px;
+  }
+
+  .formTitle {
+    font-size: 18px;
+    line-height: 125%;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+
+  .formSubtitle {
+    font-size: 14px;
+    line-height: 130%;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .formInputs {
+    gap: 12px;
+  }
+
+  .formGroup {
+    gap: 6px;
+  }
+
+  .input {
+    padding: 14px 16px;
+    font-size: 16px;
+    border-radius: 10px;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .textarea {
+    padding: 14px 16px 48px;
+    font-size: 16px;
+    border-radius: 10px;
+    min-height: 100px;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .sendBtn {
+    width: 100%;
+    max-width: 280px;
+    height: 48px;
+    padding: 14px 24px;
+    font-size: 16px;
+    border-radius: 12px;
+    margin-top: 16px;
+    touch-action: manipulation;
+  }
+
+  .sendBtn:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  .error {
+    font-size: 11px;
+    margin-top: 3px;
+  }
+}
+
+/* ============================================
+   SMALL MOBILE (Below 480px)
+   ============================================ */
+@media (max-width: 480px) {
+  .form {
+    padding: 20px 16px;
+    margin: 0 12px;
+    border-radius: 14px;
+  }
+
+  .formTitle {
+    font-size: 17px;
+  }
+
+  .formSubtitle {
+    font-size: 13px;
+    margin-bottom: 18px;
+  }
+
+  .input,
+  .textarea {
+    font-size: 16px;
+    padding: 13px 14px;
+  }
+
+  .textarea {
+    padding-bottom: 45px;
+  }
+
+  .sendBtn {
+    max-width: 100%;
+    height: 50px;
+  }
+}
+
+/* ============================================
+   LANDSCAPE ORIENTATION OPTIMIZATION
+   ============================================ */
+@media (max-height: 600px) and (orientation: landscape) {
+  .form {
+    padding: 16px 20px;
+    min-height: auto;
+  }
+
+  .formTitle {
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+
+  .formSubtitle {
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+
+  .formInputs {
+    gap: 10px;
+  }
+
+  .textarea {
+    min-height: 80px;
+    padding-bottom: 40px;
+  }
+
+  .sendBtn {
+    margin-top: 10px;
+    height: 40px;
+  }
 }
