@@ -23,6 +23,7 @@ export default function DateField({ name }: Props) {
   const [field, meta] = useField<string>({ name: name as string });
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const popoverRef = useRef<HTMLDivElement | null>(null);
 
   const selectedDate = field.value ? new Date(field.value) : undefined;
 
@@ -56,9 +57,41 @@ export default function DateField({ name }: Props) {
     };
   }, []);
 
+  // Adjust popover position to prevent overflow
+  useEffect(() => {
+    if (open && popoverRef.current && wrapperRef.current) {
+      const popover = popoverRef.current;
+      const wrapper = wrapperRef.current;
+      const rect = wrapper.getBoundingClientRect();
+      const popoverRect = popover.getBoundingClientRect();
+
+      // Check if popover would overflow right edge
+      const viewportWidth = window.innerWidth;
+      if (rect.left + popoverRect.width > viewportWidth - 20) {
+        popover.style.left = "auto";
+        popover.style.right = "0";
+      } else {
+        popover.style.left = "0";
+        popover.style.right = "auto";
+      }
+
+      // Check if popover would overflow bottom
+      const viewportHeight = window.innerHeight;
+      if (rect.bottom + popoverRect.height > viewportHeight - 20) {
+        // Position above the input if not enough space below
+        popover.style.top = "auto";
+        popover.style.bottom = "calc(100% + 4px)";
+      } else {
+        popover.style.top = "calc(100% + 4px)";
+        popover.style.bottom = "auto";
+      }
+    }
+  }, [open]);
+
   // Get tomorrow as the minimum selectable date
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
+  tomorrow.setHours(0, 0, 0, 0);
 
   return (
     <div className={css.wrapper} ref={wrapperRef}>
@@ -100,11 +133,14 @@ export default function DateField({ name }: Props) {
       </div>
 
       {open && (
-        <div className={css.popover} role="dialog" aria-modal="false">
+        <div
+          className={css.popover}
+          ref={popoverRef}
+          role="dialog"
+          aria-modal="false"
+        >
           <DayPicker
             ISOWeek
-            navLayout="around"
-            showOutsideDays
             mode="single"
             selected={selectedDate}
             disabled={{ before: tomorrow }}
@@ -120,6 +156,8 @@ export default function DateField({ name }: Props) {
               setOpen(false);
             }}
             className={css.calendar}
+            showOutsideDays
+            fixedWeeks
           />
         </div>
       )}

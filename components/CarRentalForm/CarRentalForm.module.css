@@ -41,7 +41,12 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0;
+}
+
+.errorContainer {
+  min-height: 20px;
+  margin-top: 4px;
 }
 
 .input {
@@ -122,8 +127,125 @@
   color: #ef4444;
   font-size: 12px;
   font-weight: 500;
-  margin-top: 4px;
   animation: slideIn 0.3s ease;
+  display: block;
+  line-height: 1.4;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Success Notification Styles */
+.notificationOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.notification {
+  background: var(--white, #ffffff);
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  position: relative;
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: center;
+}
+
+.notificationIcon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+  animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards;
+}
+
+.notificationTitle {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 130%;
+  color: var(--main);
+  margin: 0 0 8px 0;
+}
+
+.notificationMessage {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  color: var(--gray);
+  margin: 0;
+}
+
+.notificationClose {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  font-size: 32px;
+  line-height: 1;
+  color: var(--gray);
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+}
+
+.notificationClose:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--main);
+  transform: rotate(90deg);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes slideIn {
@@ -253,6 +375,30 @@
     font-size: 11px;
     margin-top: 3px;
   }
+
+  .errorContainer {
+    min-height: 18px;
+  }
+
+  /* Notification responsive */
+  .notification {
+    padding: 28px 24px;
+    max-width: 360px;
+  }
+
+  .notificationTitle {
+    font-size: 22px;
+  }
+
+  .notificationMessage {
+    font-size: 15px;
+  }
+
+  .notificationClose {
+    top: 12px;
+    right: 12px;
+    font-size: 28px;
+  }
 }
 
 /* ============================================
@@ -287,6 +433,35 @@
   .sendBtn {
     max-width: 100%;
     height: 50px;
+  }
+
+  .errorContainer {
+    min-height: 16px;
+  }
+
+  /* Notification for small screens */
+  .notification {
+    padding: 22px 18px;
+    width: calc(100% - 24px);
+    max-width: 320px;
+  }
+
+  .notificationIcon {
+    margin-bottom: 12px;
+  }
+
+  .notificationIcon svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .notificationTitle {
+    font-size: 19px;
+    margin-bottom: 6px;
+  }
+
+  .notificationMessage {
+    font-size: 13px;
   }
 }
 

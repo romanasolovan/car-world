@@ -13,11 +13,9 @@
   border-radius: 12px;
   background: var(--inputs);
   border: none;
-
   width: 100%;
   box-sizing: border-box;
   padding: 12px 50px 12px 20px;
-
   font-family: var(--font-family);
   font-weight: 500;
   font-size: 16px;
@@ -34,6 +32,12 @@
 
 .input::placeholder {
   color: var(--gray);
+  opacity: 0.7;
+}
+
+.inputError {
+  outline: 2px solid #ef4444 !important;
+  outline-offset: -2px;
 }
 
 .calendarToggle {
@@ -42,37 +46,497 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
-  font-size: 18px;
+  padding: 8px;
+  font-size: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
+  border-radius: 8px;
   transition: all 0.2s ease;
+  line-height: 1;
+  user-select: none;
+}
+
+.calendarToggle:hover {
+  background: rgba(0, 0, 0, 0.05);
+  transform: scale(1.1);
+}
+
+.calendarToggle:active {
+  transform: scale(0.95);
 }
 
 .popover {
   position: absolute;
-  left: 220;
+  right: 0;
+  top: calc(100% + 4px);
   z-index: 1000;
-  top: calc(100% + 2px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  margin-top: 4px;
-  background: var(--white);
+  background: var(--white, #ffffff);
   border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+  animation: slideDown 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .calendar {
-  background: var(--inputs);
+  background: var(--white, #ffffff);
+  padding: 16px;
+  font-family: var(--font-family);
+  font-size: 15px;
+  color: var(--main);
+}
 
-  border: 1px solid var(--button-hover);
-  border-radius: 12px;
+/* DayPicker Custom Styling */
+.calendar :global(.rdp) {
+  --rdp-cell-size: 42px;
+  --rdp-accent-color: var(--button);
+  --rdp-background-color: var(--button);
+  margin: 0;
+}
 
-  font-family: var(--second-family);
+.calendar :global(.rdp-months) {
+  justify-content: center;
+}
+
+.calendar :global(.rdp-month) {
+  margin: 0;
+}
+
+.calendar :global(.rdp-caption) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0 12px 0;
+  gap: 8px;
+}
+
+.calendar :global(.rdp-caption_label) {
+  font-family: var(--font-family);
   font-weight: 600;
   font-size: 16px;
-  line-height: 120%;
-  text-align: center;
   color: var(--main);
+  text-transform: capitalize;
+  flex: 1;
+  text-align: center;
+}
+
+.calendar :global(.rdp-nav) {
+  display: flex;
+  gap: 4px;
+}
+
+.calendar :global(.rdp-nav_button) {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: var(--gray);
+  flex-shrink: 0;
+}
+
+.calendar :global(.rdp-nav_button:hover) {
+  background: var(--inputs);
+  color: var(--main);
+}
+
+.calendar :global(.rdp-nav_button:disabled) {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.calendar :global(.rdp-nav_button_previous) {
+  order: -1;
+}
+
+.calendar :global(.rdp-nav_button_next) {
+  order: 1;
+}
+
+.calendar :global(.rdp-head_cell) {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--gray);
+  text-transform: uppercase;
+  padding: 8px 0;
+}
+
+.calendar :global(.rdp-cell) {
+  padding: 2px;
+}
+
+.calendar :global(.rdp-day) {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  border: none;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--main);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  background: transparent;
+}
+
+.calendar
+  :global(.rdp-day:hover:not(.rdp-day_selected):not(.rdp-day_disabled)) {
+  background: var(--inputs);
+  color: var(--main);
+  transform: scale(1.05);
+}
+
+.calendar :global(.rdp-day_selected) {
+  background: var(--button) !important;
+  color: var(--white, #ffffff) !important;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.calendar :global(.rdp-day_today:not(.rdp-day_selected)) {
+  font-weight: 600;
+  color: var(--button);
+  position: relative;
+}
+
+.calendar :global(.rdp-day_today:not(.rdp-day_selected)::after) {
+  content: "";
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--button);
+}
+
+.calendar :global(.rdp-day_disabled) {
+  color: var(--gray);
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.calendar :global(.rdp-day_outside) {
+  color: var(--gray);
+  opacity: 0.4;
+}
+
+/* Dropdown buttons styling */
+.calendar :global(.rdp-caption_dropdowns) {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.calendar :global(.rdp-dropdown) {
+  background: var(--inputs);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--main);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.calendar :global(.rdp-dropdown:hover) {
+  background: var(--button);
+  color: var(--white);
+  border-color: var(--button);
+}
+
+.calendar :global(.rdp-dropdown_month) {
+  min-width: 100px;
+}
+
+.calendar :global(.rdp-dropdown_year) {
+  min-width: 70px;
+}
+
+/* ============================================
+   TABLET ADAPTIVE STYLES (768px - 1024px)
+   ============================================ */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .input {
+    padding: 11px 48px 11px 18px;
+    font-size: 15px;
+    border-radius: 10px;
+  }
+
+  .calendarToggle {
+    right: 10px;
+    font-size: 19px;
+    padding: 7px;
+  }
+
+  .popover {
+    right: 0;
+  }
+
+  .calendar {
+    padding: 14px;
+    font-size: 14px;
+  }
+
+  .calendar :global(.rdp) {
+    --rdp-cell-size: 40px;
+  }
+
+  .calendar :global(.rdp-caption_label) {
+    font-size: 15px;
+  }
+
+  .calendar :global(.rdp-nav_button) {
+    width: 30px;
+    height: 30px;
+  }
+
+  .calendar :global(.rdp-day) {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .calendar :global(.rdp-dropdown) {
+    font-size: 13px;
+    padding: 3px 6px;
+  }
+
+  .calendar :global(.rdp-dropdown_month) {
+    min-width: 90px;
+  }
+
+  .calendar :global(.rdp-dropdown_year) {
+    min-width: 65px;
+  }
+}
+
+/* ============================================
+   MOBILE ADAPTIVE STYLES (Below 768px)
+   ============================================ */
+@media (max-width: 767px) {
+  .input {
+    padding: 14px 52px 14px 16px;
+    font-size: 16px;
+    border-radius: 10px;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .calendarToggle {
+    right: 10px;
+    font-size: 22px;
+    padding: 8px;
+    touch-action: manipulation;
+  }
+
+  .popover {
+    /* Position will be set by JavaScript for centering */
+    right: auto;
+    max-width: calc(100vw - 32px);
+    border-radius: 14px;
+  }
+
+  .calendar {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .calendar :global(.rdp) {
+    --rdp-cell-size: 40px;
+  }
+
+  .calendar :global(.rdp-caption) {
+    padding-bottom: 10px;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .calendar :global(.rdp-caption_dropdowns) {
+    order: 1;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .calendar :global(.rdp-nav) {
+    order: 2;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .calendar :global(.rdp-caption_label) {
+    font-size: 15px;
+  }
+
+  .calendar :global(.rdp-nav_button) {
+    width: 36px;
+    height: 36px;
+    touch-action: manipulation;
+  }
+
+  .calendar :global(.rdp-head_cell) {
+    font-size: 12px;
+    padding: 6px 0;
+  }
+
+  .calendar :global(.rdp-day) {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+    border-radius: 8px;
+  }
+
+  .calendar :global(.rdp-day:active:not(.rdp-day_disabled)) {
+    transform: scale(0.95);
+  }
+
+  .calendar :global(.rdp-dropdown) {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+
+  .calendar :global(.rdp-dropdown_month) {
+    min-width: 110px;
+  }
+
+  .calendar :global(.rdp-dropdown_year) {
+    min-width: 75px;
+  }
+}
+
+/* ============================================
+   SMALL MOBILE (Below 480px)
+   ============================================ */
+@media (max-width: 480px) {
+  .input {
+    padding: 13px 50px 13px 14px;
+  }
+
+  .calendarToggle {
+    right: 8px;
+    font-size: 20px;
+  }
+
+  .popover {
+    max-width: calc(100vw - 24px);
+    border-radius: 12px;
+  }
+
+  .calendar {
+    padding: 10px;
+  }
+
+  .calendar :global(.rdp) {
+    --rdp-cell-size: 38px;
+  }
+
+  .calendar :global(.rdp-caption_label) {
+    font-size: 14px;
+  }
+
+  .calendar :global(.rdp-nav_button) {
+    width: 32px;
+    height: 32px;
+  }
+
+  .calendar :global(.rdp-head_cell) {
+    font-size: 11px;
+    padding: 5px 0;
+  }
+
+  .calendar :global(.rdp-day) {
+    width: 38px;
+    height: 38px;
+    font-size: 13px;
+  }
+
+  .calendar :global(.rdp-dropdown) {
+    font-size: 13px;
+    padding: 5px 8px;
+  }
+
+  .calendar :global(.rdp-dropdown_month) {
+    min-width: 100px;
+  }
+
+  .calendar :global(.rdp-dropdown_year) {
+    min-width: 70px;
+  }
+}
+
+/* ============================================
+   LANDSCAPE ORIENTATION OPTIMIZATION
+   ============================================ */
+@media (max-height: 600px) and (orientation: landscape) {
+  .popover {
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+  }
+
+  .calendar {
+    padding: 10px;
+  }
+
+  .calendar :global(.rdp) {
+    --rdp-cell-size: 32px;
+  }
+
+  .calendar :global(.rdp-caption) {
+    padding-bottom: 8px;
+  }
+
+  .calendar :global(.rdp-caption_label) {
+    font-size: 14px;
+  }
+
+  .calendar :global(.rdp-day) {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+
+  .calendar :global(.rdp-head_cell) {
+    padding: 4px 0;
+    font-size: 11px;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY & TOUCH IMPROVEMENTS
+   ============================================ */
+@media (hover: none) and (pointer: coarse) {
+  .calendarToggle {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .calendar :global(.rdp-day) {
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  .calendar :global(.rdp-nav_button) {
+    min-width: 40px;
+    min-height: 40px;
+  }
 }
